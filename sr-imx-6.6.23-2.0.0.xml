@@ -34,7 +34,7 @@
 
   <project name="meta-flutter" path="sources/meta-flutter" remote="flutter" revision="b2f985e8d237fa4c3152e151e4f42ea80a8d17ea" upstream="scarthgap"/>  
 
-  <project name="meta-solidrun-arm-imx8" path="sources/meta-solidrun-arm-imx8" remote="doesnotexist" revision="scarthgap-imx8mp-WIP">
+  <project name="meta-solidrun-arm-imx8" path="sources/meta-solidrun-arm-imx8" remote="doesnotexist" revision="scarthgap-imx8m-WIP">
     <linkfile dest="imx-setup-release.sh" src="setup.sh"/>
   </project>
 </manifest>
