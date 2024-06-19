@@ -1226,7 +1226,7 @@ index 000000000000..a83e66ef2a82
 +		pinctrl-0 = <&pinctrl_pmic>;
 +		interrupt-parent = <&gpio1>;
 +		interrupts = <3 GPIO_ACTIVE_LOW>;
-+		pca,i2c-lt-en = /bits/ 8 <0x2>;
++		nxp,i2c-lt-enable = /bits/ 8 <0x2>;
 +
 +		regulators {
 +			buck1: BUCK1 {
