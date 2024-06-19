@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <default sync-j="4"/>
+
+  <remote fetch="https://github.com/nxp-imx" name="nxp-imx"/>
+  <remote fetch="https://code.qt.io/yocto"  name="QT6"/>
+  <remote fetch="https://github.com/kraj" name="clang"/>
+  <remote fetch="https://github.com/Freescale" name="community"/>
+  <remote fetch="https://github.com/openembedded" name="oe"/>
+  <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
+  <remote fetch="https://github.com/nxp-imx-support" name="imx-support"/>
+  <remote fetch="https://github.com/doesnotexist/" name="doesnotexist"/>
+  <remote fetch="https://github.com/meta-flutter" name="flutter"/>
+
+  <project name="fsl-community-bsp-base" path="sources/base" remote="community" revision="84df0b1ff416c6739472f7f7eadff04fa90d38f6" upstream="scarthgap">
+    <linkfile dest="README" src="README"/>
+    <linkfile dest="setup-environment" src="setup-environment"/>
+  </project>
+  <project name="meta-clang" path="sources/meta-clang" remote="clang" revision="e7dceb1c92caf7f21ef1d7b49c85328c30cffd90" upstream="scarthgap"/>
+  <project name="meta-freescale" path="sources/meta-freescale" remote="community" revision="dd05ecfea5289ae2e533bafde06c9ae6d6afccab" upstream="scarthgap"/>
+  <project name="meta-freescale-3rdparty" path="sources/meta-freescale-3rdparty" remote="community" revision="8b61684f0b1ba8bacdf3a69d993445e9791d4932" upstream="scarthgap"/>
+  <project name="meta-freescale-distro" path="sources/meta-freescale-distro" remote="community" revision="b9d6a5d9931922558046d230c1f5f4ef6ee72345" upstream="scarthgap"/>
+
+  <project name="meta-imx" path="sources/meta-imx" remote="nxp-imx" revision="refs/tags/rel_imx_6.6.23_2.0.0" upstream="scarthgap-6.6.23-2.0.0">
+    <linkfile dest="README-IMXBSP" src="README"/>
+  </project>
+
+  <project name="meta-openembedded" path="sources/meta-openembedded" remote="oe" revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d" upstream="scarthgap"/>
+
+  <project name="poky" path="sources/poky" remote="yocto" revision="0efe15c5ba29ba4d8599b5d151e6e8ffbf9b253d" upstream="scarthgap"/>
+  <project name="meta-arm" path="sources/meta-arm" remote="yocto" revision="a88dd94883185156f274bad435bd45c3a9d185bf" upstream="scarthgap"/>
+  <project name="meta-virtualization" path="sources/meta-virtualization" remote="yocto" revision="37c06acf58f9020bccfc61954eeefe160642d5f3" upstream="scarthgap"/>
+
+  <project name="meta-flutter" path="sources/meta-flutter" remote="flutter" revision="b2f985e8d237fa4c3152e151e4f42ea80a8d17ea" upstream="scarthgap"/>  
+
+  <project name="meta-solidrun-arm-imx8" path="sources/meta-solidrun-arm-imx8" remote="doesnotexist" revision="scarthgap-imx8mp-WIP">
+    <linkfile dest="imx-setup-release.sh" src="setup.sh"/>
+  </project>
+</manifest>
