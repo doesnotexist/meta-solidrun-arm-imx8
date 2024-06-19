@@ -1,8 +1,8 @@
-From ebf6a3860bbe8c22fb5d3f0c5e8cd1d602af7f9e Mon Sep 17 00:00:00 2001
+From 765b9b96b0705061037d5255ba9eb0b51ccfb119 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:30 +0300
-Subject: [PATCH 07/21] cmd: tlv_eeprom: convert functions used by command to
- api functions
+Subject: [PATCH] cmd: tlv_eeprom: convert functions used by command to api
+ functions
 
 - prog_eeprom: write_tlvinfo_tlv_eeprom
 - update_crc: tlvinfo_update_crc
@@ -16,7 +16,7 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  2 files changed, 76 insertions(+), 37 deletions(-)
 
 diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
-index 00c5b5f840..1b4f2537f6 100644
+index 57cfd355df1..2b1d5cb0089 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
 @@ -28,13 +28,9 @@ DECLARE_GLOBAL_DATA_PTR;
@@ -204,7 +204,7 @@ index 00c5b5f840..1b4f2537f6 100644
  
  	*hdr = tlv_hdr;
 diff --git a/include/tlv_eeprom.h b/include/tlv_eeprom.h
-index fd45e5f6eb..30626a1067 100644
+index 2b1e19b2bdd..7fda5b886ab 100644
 --- a/include/tlv_eeprom.h
 +++ b/include/tlv_eeprom.h
 @@ -113,6 +113,51 @@ int write_tlv_eeprom(void *eeprom, int len, int dev);
@@ -276,6 +276,3 @@ index fd45e5f6eb..30626a1067 100644
 +}
 +
  #endif /* __TLV_EEPROM_H_ */
--- 
-2.40.1
-
