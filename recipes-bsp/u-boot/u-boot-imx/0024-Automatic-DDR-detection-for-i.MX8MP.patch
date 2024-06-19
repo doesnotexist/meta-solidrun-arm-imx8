@@ -127,37 +127,22 @@ If size is > 4G, update PHYS_SDRAM_2_SIZE.
 
 Signed-off-by: Mikhail Anikin <mikhail.anikin@solid-run.com>
 ---
- arch/arm/include/asm/arch-imx8m/ddr.h         |   2 +
  arch/arm/mach-imx/imx8m/soc.c                 |  25 ++
  board/solidrun/imx8mp_solidrun/Makefile       |   2 +-
  .../imx8mp_solidrun/imx8mp_solidrun.c         | 103 +++++-
  ...g.c => lpddr4_timing_1gb_samsung_micron.c} |   2 +-
  ...g.c => lpddr4_timing_4gb_samsung_micron.c} |   2 +-
  board/solidrun/imx8mp_solidrun/spl.c          | 337 +++++++++++++++---
- drivers/ddr/imx/imx8m/ddr_init.c              |  10 +-
  include/configs/imx8mp_solidrun.h             |   5 +-
  9 files changed, 412 insertions(+), 76 deletions(-)
  rename board/solidrun/imx8mp_solidrun/{lpddr4_timing_1gb_samsung.c => lpddr4_timing_1gb_samsung_micron.c} (99%)
  rename board/solidrun/imx8mp_solidrun/{lpddr4_timing_4gb_samsung.c => lpddr4_timing_4gb_samsung_micron.c} (99%)
 
-diff --git a/arch/arm/include/asm/arch-imx8m/ddr.h b/arch/arm/include/asm/arch-imx8m/ddr.h
-index 5e4fbecf05..264d66b9ee 100644
---- a/arch/arm/include/asm/arch-imx8m/ddr.h
-+++ b/arch/arm/include/asm/arch-imx8m/ddr.h
-@@ -726,6 +726,8 @@ void get_trained_CDD(unsigned int fsp);
- 
- ulong ddrphy_addr_remap(uint32_t paddr_apb_from_ctlr);
- 
-+unsigned int lpddr4_mr_read(unsigned int mr_rank, unsigned int mr_addr);
-+
- static inline void reg32_write(unsigned long addr, u32 val)
- {
- 	writel(val, addr);
 diff --git a/arch/arm/mach-imx/imx8m/soc.c b/arch/arm/mach-imx/imx8m/soc.c
 index 0d2f7a5897..33925c53b1 100644
 --- a/arch/arm/mach-imx/imx8m/soc.c
 +++ b/arch/arm/mach-imx/imx8m/soc.c
-@@ -239,6 +239,19 @@ __weak int board_phys_sdram_size(phys_size_t *size)
+@@ -252,6 +252,19 @@ __weak int board_phys_sdram_size(phys_size_t *size)
  	return 0;
  }
  
@@ -177,7 +162,7 @@ index 0d2f7a5897..33925c53b1 100644
  int dram_init(void)
  {
  	phys_size_t sdram_size;
-@@ -254,6 +267,12 @@ int dram_init(void)
+@@ -267,6 +280,12 @@ int dram_init(void)
  	else
  		gd->ram_size = sdram_size;
  
@@ -190,7 +175,7 @@ index 0d2f7a5897..33925c53b1 100644
  	return 0;
  }
  
-@@ -297,6 +316,12 @@ int dram_init_banksize(void)
+@@ -310,6 +329,12 @@ int dram_init_banksize(void)
  		gd->bd->bi_dram[bank].size = sdram_b1_size;
  	}
  
@@ -763,28 +748,6 @@ index 74b172cf34..59116cc5a8 100644
  #if CONFIG_IS_ENABLED(DM_PMIC_PCA9450)
  int power_init_board(void)
  {
-diff --git a/drivers/ddr/imx/imx8m/ddr_init.c b/drivers/ddr/imx/imx8m/ddr_init.c
-index d64edc57be..7d4b1b0bae 100644
---- a/drivers/ddr/imx/imx8m/ddr_init.c
-+++ b/drivers/ddr/imx/imx8m/ddr_init.c
-@@ -134,9 +134,15 @@ unsigned int lpddr4_mr_read(unsigned int mr_rank, unsigned int mr_addr)
- 		tmp = reg32_read(DRC_PERF_MON_MRR0_DAT(0));
- 	} while ((tmp & 0x8) == 0);
- 	tmp = reg32_read(DRC_PERF_MON_MRR1_DAT(0));
--	tmp = tmp & 0xff;
-+	// tmp = tmp & 0xff;
- 	reg32_write(DRC_PERF_MON_MRR0_DAT(0), 0x4);
--
-+	while (tmp) { //try to find a significant byte in the word
-+		if (tmp & 0xff) {
-+			tmp &= 0xff;
-+			break;
-+		}
-+		tmp >>= 8;
-+	}
- 	return tmp;
- }
- 
 diff --git a/include/configs/imx8mp_solidrun.h b/include/configs/imx8mp_solidrun.h
 index 8fb5560d53..c638fd895f 100644
 --- a/include/configs/imx8mp_solidrun.h
