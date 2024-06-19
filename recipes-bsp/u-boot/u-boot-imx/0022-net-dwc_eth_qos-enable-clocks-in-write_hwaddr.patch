@@ -18,7 +18,7 @@ diff --git a/drivers/net/dwc_eth_qos.c b/drivers/net/dwc_eth_qos.c
 index bd6c89871b..27eb456f23 100644
 --- a/drivers/net/dwc_eth_qos.c
 +++ b/drivers/net/dwc_eth_qos.c
-@@ -1059,6 +1059,7 @@ static int eqos_write_hwaddr(struct udevice *dev)
+@@ -669,6 +669,7 @@ static int eqos_write_hwaddr(struct udevice *dev)
  	struct eth_pdata *plat = dev_get_plat(dev);
  	struct eqos_priv *eqos = dev_get_priv(dev);
  	uint32_t val;
@@ -26,7 +26,7 @@ index bd6c89871b..27eb456f23 100644
  
  	/*
  	 * This function may be called before start() or after stop(). At that
-@@ -1082,8 +1083,15 @@ static int eqos_write_hwaddr(struct udevice *dev)
+@@ -692,8 +693,15 @@ static int eqos_write_hwaddr(struct udevice *dev)
  	 * future-proofing with the expectation the driver will eventually be
  	 * ported to some system where the expectation above is true.
  	 */
@@ -44,7 +44,7 @@ index bd6c89871b..27eb456f23 100644
  
  	/* Update the MAC address */
  	val = (plat->enetaddr[5] << 8) |
-@@ -1095,6 +1103,9 @@ static int eqos_write_hwaddr(struct udevice *dev)
+@@ -705,6 +713,9 @@ static int eqos_write_hwaddr(struct udevice *dev)
  		(plat->enetaddr[0]);
  	writel(val, &eqos->mac_regs->address0_low);
  
