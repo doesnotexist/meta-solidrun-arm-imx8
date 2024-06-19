@@ -6,6 +6,7 @@ SRC_URI += " \
         file://0003-imx8mp_solidrun-add-ddr-calibration-for-Samsung-4GB-.patch \
 		file://0007-cmd-tlv_eeprom-convert-functions-used-by-command-to-.patch \
 		file://0008-cmd-tlv_eeprom-remove-empty-function-implementations.patch \
+                file://0009-cmd-tlv_eeprom-move-missing-declarations-and-defines.patch \
 		file://0014-arm-mvebu-clearfog-enable-tlv-library-for-spl-in-fav.patch \
 		file://0015-lib-tlv_eeprom-add-function-for-reading-one-entry-in.patch \
 		file://0016-imx8mp-detect-board-from-tlv-eeprom.patch \
