@@ -15,7 +15,7 @@ diff --git a/drivers/net/fec_mxc.c b/drivers/net/fec_mxc.c
 index 99a785509..f08fb505b 100644
 --- a/drivers/net/fec_mxc.c
 +++ b/drivers/net/fec_mxc.c
-@@ -401,6 +401,11 @@ static void fec_rbd_clean(int last, struct fec_bd *prbd)
+@@ -394,6 +394,11 @@ static void fec_rbd_clean(int last, struct fec_bd *prbd)
  	writew(0, &prbd->data_length);
  }
  
