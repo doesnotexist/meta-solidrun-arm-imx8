@@ -26,9 +26,10 @@
     <linkfile dest="README-IMXBSP" src="README"/>
   </project>
 
+
   <project name="meta-nxp-demo-experience" path="sources/meta-nxp-demo-experience" remote="imx-support" revision="8679e806365c7f522f1ec91b5bcf26750923eb42" upstream="scarthgap-6.6.23-2.0.0"/>
   <project name="meta-openembedded" path="sources/meta-openembedded" remote="oe" revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d" upstream="scarthgap"/>
-
+  <project name="meta-qt6" path="sources/meta-qt6" remote="QT6" revision="2bd3d63570c43f97dbedd65d0ec9232bf0cb484b" upstream="lts-6.5.6"/>
   <project name="poky" path="sources/poky" remote="yocto" revision="0efe15c5ba29ba4d8599b5d151e6e8ffbf9b253d" upstream="scarthgap"/>
   <project name="meta-arm" path="sources/meta-arm" remote="yocto" revision="a88dd94883185156f274bad435bd45c3a9d185bf" upstream="scarthgap"/>
   <project name="meta-virtualization" path="sources/meta-virtualization" remote="yocto" revision="37c06acf58f9020bccfc61954eeefe160642d5f3" upstream="scarthgap"/>
