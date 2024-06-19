@@ -16,7 +16,7 @@ diff --git a/include/tlv_eeprom.h b/include/tlv_eeprom.h
 index 30626a1067..55fd72d6d2 100644
 --- a/include/tlv_eeprom.h
 +++ b/include/tlv_eeprom.h
-@@ -65,7 +65,8 @@ struct __attribute__ ((__packed__)) tlvinfo_tlv {
+@@ -67,7 +67,8 @@ struct __attribute__ ((__packed__)) tlvinfo_tlv {
  #define TLV_CODE_VENDOR_EXT     0xFD
  #define TLV_CODE_CRC_32         0xFE
  
@@ -26,7 +26,7 @@ index 30626a1067..55fd72d6d2 100644
  
  /**
   * read_tlv_eeprom - Read the EEPROM binary data from the hardware
-@@ -156,27 +157,6 @@ void tlvinfo_update_crc(u8 *eeprom);
+@@ -160,27 +161,6 @@ void tlvinfo_update_crc(u8 *eeprom);
   */
  bool tlvinfo_check_crc(u8 *eeprom);
  
