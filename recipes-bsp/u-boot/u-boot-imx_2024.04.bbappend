@@ -16,6 +16,9 @@ SRC_URI += " \
         file://0015-lib-tlv_eeprom-add-function-for-reading-one-entry-in.patch \
         file://0016-imx8mp-detect-board-from-tlv-eeprom.patch \
         file://0017-imx8mp-don-t-pre-define-fdtfile-environment-variable.patch \
+        file://0018-imx8mp-move-mac-address-selection-logic-to-board-fil.patch \
+        file://0019-imx8mp-read-mac-from-tlv-eeprom.patch \
+        file://0020-imx8mp-implement-tlv-eeprom-vendor-extension-for-kit.patch \
 "
 
 LTO:class-target = ""

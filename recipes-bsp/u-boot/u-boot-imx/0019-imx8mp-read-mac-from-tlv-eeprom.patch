@@ -1,4 +1,4 @@
-From 0909285a7df275e9e6de035cd43df378d424b6f9 Mon Sep 17 00:00:00 2001
+From d90eb34273e534ee13a8a7cb01f592820d6a1d89 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Sun, 3 Apr 2022 14:52:43 +0300
 Subject: [PATCH 19/21] imx8mp: read mac from tlv eeprom
@@ -9,10 +9,10 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  1 file changed, 95 insertions(+), 2 deletions(-)
 
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index e2bd8fc752..7fa59acc9d 100644
+index e2bd8fc7523..d84d7b6a92f 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-@@ -549,12 +549,79 @@ int board_late_init(void)
+@@ -549,13 +549,80 @@ int board_late_init(void)
  	return 0;
  }
  
@@ -78,7 +78,7 @@ index e2bd8fc752..7fa59acc9d 100644
 -	mac[0] = 0;
 +	static bool read_mac = false;
 +	int i;
-+
+ 
 +	// HACK: id 1 is the first
 +	if(dev_id == 0) {
 +		pr_err("%s: requested mac address for unknown interface 0!\n", __func__);
@@ -91,9 +91,10 @@ index e2bd8fc752..7fa59acc9d 100644
 +		board_mac_from_tlv_eeprom();
 +		read_mac = true;
 +	}
- 
++ 
  	/*
  	 * Note: Environment ethaddr (eth1addr, eth2addr, ...) has first priority,
+ 	 * therefore it should be read and returned here.
 @@ -563,6 +630,32 @@ int board_get_mac(int dev_id, unsigned char *mac) {
  	 * causing a feedback loop.
  	 */
@@ -127,6 +128,7 @@ index e2bd8fc752..7fa59acc9d 100644
  	// fuses
  	imx_get_mac_from_fuse(dev_id, mac);
  	if(is_valid_ethaddr(mac)) {
+
 -- 
 2.40.1
 
