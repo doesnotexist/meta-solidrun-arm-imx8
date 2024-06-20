@@ -10,6 +10,12 @@ SRC_URI += " \
         file://0009-cmd-tlv_eeprom-move-missing-declarations-and-defines.patch \
         file://0010-cmd-tlv_eeprom-hide-access-to-static-tlv_devices-arr.patch \
         file://0011-cmd-tlv_eeprom-clean-up-two-defines-for-one-thing.patch \
+        file://0012-cmd-tlv_eeprom-add-my-copyright.patch \
+        file://0013-cmd-tlv_eeprom-split-off-tlv-library-from-command.patch \
+        file://0014-arm-mvebu-clearfog-enable-tlv-library-for-spl-in-fav.patch \
+        file://0015-lib-tlv_eeprom-add-function-for-reading-one-entry-in.patch \
+        file://0016-imx8mp-detect-board-from-tlv-eeprom.patch \
+        file://0017-imx8mp-don-t-pre-define-fdtfile-environment-variable.patch \
 "
 
 LTO:class-target = ""

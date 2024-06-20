@@ -1,4 +1,4 @@
-From 9f1ebd03d6c4deebbd4d62d061ceeea4eec9be6e Mon Sep 17 00:00:00 2001
+From 560ef2024e8e01ff105b22481359d350a33a627b Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:35 +0300
 Subject: [PATCH 12/21] cmd: tlv_eeprom: add my copyright
@@ -12,7 +12,7 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
-index c110927cb5..c66116b2c4 100644
+index 00436b7000b..8903abb1ab8 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
 @@ -7,6 +7,7 @@

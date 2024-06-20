@@ -1,4 +1,4 @@
-From 1d0d516cdff72471092636e40bf5fbed614c19f1 Mon Sep 17 00:00:00 2001
+From 799bea8a97add0cc8e87c56dab8d20b5aabcc771 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:36 +0300
 Subject: [PATCH 13/21] cmd: tlv_eeprom: split off tlv library from command
@@ -12,42 +12,42 @@ Split off the parsing, read and write into a standalone tlv library.
 Signed-off-by: Josua Mayer <josua@solid-run.com>
 ---
  cmd/Kconfig          |   2 +
- cmd/tlv_eeprom.c     | 742 +-----------------------------------------
- lib/Kconfig          |   2 +
+ cmd/tlv_eeprom.c     | 727 +----------------------------------------
+ lib/Kconfig          |   1 +
  lib/Makefile         |   2 +
  lib/tlv/Kconfig      |  15 +
  lib/tlv/Makefile     |   5 +
  lib/tlv/tlv_eeprom.c | 750 +++++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 786 insertions(+), 732 deletions(-)
+ 7 files changed, 781 insertions(+), 721 deletions(-)
  create mode 100644 lib/tlv/Kconfig
  create mode 100644 lib/tlv/Makefile
  create mode 100644 lib/tlv/tlv_eeprom.c
 
 diff --git a/cmd/Kconfig b/cmd/Kconfig
-index f6bd71451b..4738945607 100644
+index 413051ac4a1..86bbe39c7a3 100644
 --- a/cmd/Kconfig
 +++ b/cmd/Kconfig
-@@ -159,6 +159,7 @@ config CMD_REGINFO
+@@ -212,6 +212,7 @@ config CMD_REGINFO
  
  config CMD_TLV_EEPROM
  	bool "tlv_eeprom"
 +	select EEPROM_TLV_LIB
  	depends on I2C_EEPROM
+ 	select CRC32
  	help
- 	  Display and program the system EEPROM data block in ONIE Tlvinfo
-@@ -166,6 +167,7 @@ config CMD_TLV_EEPROM
+@@ -220,6 +221,7 @@ config CMD_TLV_EEPROM
  
  config SPL_CMD_TLV_EEPROM
  	bool "tlv_eeprom for SPL"
-+	select SPL_EEPROM_TLV_LIB
++	select EEPROM_TLV_LIB
  	depends on SPL_I2C_EEPROM
  	select SPL_DRIVERS_MISC
- 	help
+ 	select SPL_CRC32
 diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
-index c66116b2c4..99b79cad8b 100644
+index 8903abb1ab8..c0beaddce6d 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
-@@ -10,131 +10,26 @@
+@@ -10,133 +10,22 @@
   * Copyright (C) 2022 Josua Mayer <josua@solid-run.com>
   */
  
@@ -66,10 +66,6 @@ index c66116b2c4..99b79cad8b 100644
 -#include "tlv_eeprom.h"
 -
 -DECLARE_GLOBAL_DATA_PTR;
-+#include <linux/kernel.h>
-+#include <stdio.h>
-+#include <tlv_eeprom.h>
-+#include <vsprintf.h>
  
  /* File scope function prototypes */
 -static int read_eeprom(int devnum, u8 *eeprom);
@@ -136,13 +132,13 @@ index c66116b2c4..99b79cad8b 100644
 -
 -	// Is the last TLV a CRC?
 -	eeprom_crc = to_entry(&eeprom[TLV_INFO_HEADER_SIZE +
--		be16_to_cpu(eeprom_hdr->totallen) - (TLV_INFO_ENTRY_SIZE + 4)]);
+-               be16_to_cpu(eeprom_hdr->totallen) - (TLV_INFO_ENTRY_SIZE + 4)]);
 -	if (eeprom_crc->type != TLV_CODE_CRC_32 || eeprom_crc->length != 4)
 -		return false;
 -
 -	// Calculate the checksum
 -	calc_crc = crc32(0, (void *)eeprom,
--			 TLV_INFO_HEADER_SIZE + be16_to_cpu(eeprom_hdr->totallen) - 4);
+-                        TLV_INFO_HEADER_SIZE + be16_to_cpu(eeprom_hdr->totallen) - 4);
 -	stored_crc = (eeprom_crc->value[0] << 24) |
 -		(eeprom_crc->value[1] << 16) |
 -		(eeprom_crc->value[2] <<  8) |
@@ -167,6 +163,8 @@ index c66116b2c4..99b79cad8b 100644
 -	if (ret == 0 && is_valid_tlvinfo_header(eeprom_hdr))
 -		ret = read_tlv_eeprom((void *)eeprom_tlv, TLV_INFO_HEADER_SIZE,
 -				      be16_to_cpu(eeprom_hdr->totallen), devnum);
+-	else if (ret == -ENODEV)
+-		return ret;
 -
 -	// If the contents are invalid, start over with default contents
 -	if (!is_valid_tlvinfo_header(eeprom_hdr) ||
@@ -187,7 +185,7 @@ index c66116b2c4..99b79cad8b 100644
  /**
   *  show_eeprom
   *
-@@ -323,70 +218,10 @@ static void decode_tlv(struct tlvinfo_tlv *tlv)
+@@ -325,70 +214,10 @@ static void decode_tlv(struct tlvinfo_tlv *tlv)
  	printf("%-20s 0x%02X %3d %s\n", name, tlv->type, tlv->length, value);
  }
  
@@ -240,7 +238,7 @@ index c66116b2c4..99b79cad8b 100644
 -
 -	tlvinfo_update_crc(eeprom);
 -
--	eeprom_len = TLV_INFO_HEADER_SIZE + be16_to_cpu(eeprom_hdr->totallen);
+-	eprom_len = TLV_INFO_HEADER_SIZE + be16_to_cpu(eeprom_hdr->totallen);
 -	ret = write_tlv_eeprom(eeprom, eeprom_len, dev);
 -	if (ret) {
 -		printf("Programming failed.\n");
@@ -259,7 +257,7 @@ index c66116b2c4..99b79cad8b 100644
  {
  	int i;
  
-@@ -404,7 +239,7 @@ void show_tlv_code_list(void)
+@@ -406,7 +235,7 @@ void show_tlv_code_list(void)
   *
   *  This function implements the tlv_eeprom command.
   */
@@ -268,7 +266,7 @@ index c66116b2c4..99b79cad8b 100644
  {
  	char cmd;
  	struct tlvinfo_header *eeprom_hdr = to_header(eeprom);
-@@ -526,348 +361,6 @@ U_BOOT_CMD(tlv_eeprom, 4, 1,  do_tlv_eeprom,
+@@ -541,348 +370,6 @@ U_BOOT_CMD(tlv_eeprom, 4, 1,  do_tlv_eeprom,
  	   "    - List the understood TLV codes and names.\n"
  	);
  
@@ -617,11 +615,10 @@ index c66116b2c4..99b79cad8b 100644
  static void show_tlv_devices(int current_dev)
  {
  	unsigned int dev;
-@@ -877,218 +370,3 @@ static void show_tlv_devices(int current_dev)
- 			printf("TLV: %u%s\n", dev,
+@@ -893,205 +380,3 @@ static void show_tlv_devices(int current_dev)
  			       (dev == current_dev) ? " (*)" : "");
  }
--
+ 
 -static int find_tlv_devices(struct udevice **tlv_devices_p)
 -{
 -	int ret;
@@ -801,19 +798,7 @@ index c66116b2c4..99b79cad8b 100644
 -	return 0;
 -}
 -
--/**
-- *  populate_serial_number - read the serial number from EEPROM
-- *
-- *  This function reads the serial number from the EEPROM and sets the
-- *  appropriate environment variable.
-- *
-- *  The environment variable is only set if it has not been set
-- *  already.  This ensures that any user-saved variables are never
-- *  overwritten.
-- *
-- *  This function must be called after relocation.
-- */
--int populate_serial_number(int devnum)
+-int serial_read_from_eeprom(int devnum)
 -{
 -	char serialstr[257];
 -	int eeprom_index;
@@ -837,31 +822,31 @@ index c66116b2c4..99b79cad8b 100644
 -	return 0;
 -}
 diff --git a/lib/Kconfig b/lib/Kconfig
-index acd3d51bc9..11b4abdf14 100644
+index effaffe355d..2ccbc70d741 100644
 --- a/lib/Kconfig
 +++ b/lib/Kconfig
-@@ -906,3 +906,5 @@ config PHANDLE_CHECK_SEQ
- 	  phandles in fdtdec_get_alias_seq() function.
+@@ -1199,4 +1199,5 @@ config PHANDLE_CHECK_SEQ
  
  endmenu
-+
+ 
 +source lib/tlv/Kconfig
+ source lib/fwu_updates/Kconfig
 diff --git a/lib/Makefile b/lib/Makefile
-index 632dcba869..75797f0c46 100644
+index e6b6a9e0aab..d4628dd6f51 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
-@@ -91,6 +91,8 @@ obj-$(CONFIG_AVB_SUPPORT) += avb/
+@@ -96,6 +96,8 @@ obj-$(CONFIG_AVB_SUPPORT) += avb/
  obj-$(CONFIG_$(SPL_TPL_)OF_LIBFDT) += libfdt/
  obj-$(CONFIG_$(SPL_TPL_)OF_REAL) += fdtdec_common.o fdtdec.o
  
 +obj-$(CONFIG_$(SPL_)EEPROM_TLV_LIB) += tlv/
 +
  ifdef CONFIG_SPL_BUILD
- obj-$(CONFIG_SPL_YMODEM_SUPPORT) += crc16.o
- obj-$(CONFIG_$(SPL_TPL_)HASH) += crc16.o
+ obj-$(CONFIG_SPL_YMODEM_SUPPORT) += crc16-ccitt.o
+ obj-$(CONFIG_$(SPL_TPL_)HASH) += crc16-ccitt.o
 diff --git a/lib/tlv/Kconfig b/lib/tlv/Kconfig
 new file mode 100644
-index 0000000000..b3912ada78
+index 00000000000..b3912ada78e
 --- /dev/null
 +++ b/lib/tlv/Kconfig
 @@ -0,0 +1,15 @@
@@ -882,7 +867,7 @@ index 0000000000..b3912ada78
 +	  TLV-encoded data from EEPROMs.
 diff --git a/lib/tlv/Makefile b/lib/tlv/Makefile
 new file mode 100644
-index 0000000000..8e96752e75
+index 00000000000..8e96752e75c
 --- /dev/null
 +++ b/lib/tlv/Makefile
 @@ -0,0 +1,5 @@
@@ -893,7 +878,7 @@ index 0000000000..8e96752e75
 +obj-$(CONFIG_EEPROM_TLV_LIB) += tlv_eeprom.o
 diff --git a/lib/tlv/tlv_eeprom.c b/lib/tlv/tlv_eeprom.c
 new file mode 100644
-index 0000000000..464f0aa1fa
+index 00000000000..464f0aa1faa
 --- /dev/null
 +++ b/lib/tlv/tlv_eeprom.c
 @@ -0,0 +1,750 @@
