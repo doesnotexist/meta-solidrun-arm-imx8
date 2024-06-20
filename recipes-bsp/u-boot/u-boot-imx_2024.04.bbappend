@@ -19,18 +19,6 @@ SRC_URI += " \
         file://0018-imx8mp-move-mac-address-selection-logic-to-board-fil.patch \
         file://0019-imx8mp-read-mac-from-tlv-eeprom.patch \
         file://0020-imx8mp-implement-tlv-eeprom-vendor-extension-for-kit.patch \
-       	file://0021-solidrun-imx8mp-unify-TLV-parsing-and-storage.patch \
-	file://0022-net-dwc_eth_qos-enable-clocks-in-write_hwaddr.patch \
-	file://0023-imx8mp-solidrun-For-yocto-only-pass-the-fdtfile.patch \
-	file://0024-Automatic-DDR-detection-for-i.MX8MP.patch \
-	file://0025-Add-HummingBoard-Extended-tlv-based-support.patch \
-	file://0026-board-solidrun-imx8mp-fix-parsing-of-tlv-data-kit-sk.patch \
-	file://0027-board-solidrun-imx8mp-fix-fdtfile-variable-setting.patch \
-	file://0028-board-solidrun-imx8mp-update-spl_print_ddr_tables-wi.patch \
-	file://0029-imx8mp-solidrun-add-ddr-training-for-8gb-micron-modu.patch \
-	file://0030-board-solidrun-imx8mp-introduce-ddr-training-patches.patch \
-	file://0031-board-solidrun-imx8mp-remove-dtb-fixup-for-hummingbo.patch \
-	file://0032-net-phy-genphy_config-disable-BMCR_PDOWN-if-set.patch \
 "
 
 LTO:class-target = ""
