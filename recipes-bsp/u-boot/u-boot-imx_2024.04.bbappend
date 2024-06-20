@@ -5,6 +5,7 @@ SRC_URI += " \
         file://0002-imx8mp-add-memory-support-for-2GByte-Samsung.patch \
         file://0003-imx8mp_solidrun-add-ddr-calibration-for-Samsung-4GB-.patch \
         file://0006-cmd-tlv_eeprom-do_tlv_eeprom-stop-using-non-api-read.patch \
+        file://0007-cmd-tlv_eeprom-convert-functions-used-by-command-to-.patch \
 "
 
 LTO:class-target = ""

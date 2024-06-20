@@ -1,4 +1,4 @@
-From 765b9b96b0705061037d5255ba9eb0b51ccfb119 Mon Sep 17 00:00:00 2001
+From 8d0fe21d6158af1510138870cdef9a9524c1994b Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:30 +0300
 Subject: [PATCH] cmd: tlv_eeprom: convert functions used by command to api
@@ -11,12 +11,12 @@ Subject: [PATCH] cmd: tlv_eeprom: convert functions used by command to api
 
 Signed-off-by: Josua Mayer <josua@solid-run.com>
 ---
- cmd/tlv_eeprom.c     | 56 +++++++++++++++----------------------------
- include/tlv_eeprom.h | 57 ++++++++++++++++++++++++++++++++++++++++++++
+ cmd/tlv_eeprom.c     | 54 ++++++++++++++--------------------------
+ include/tlv_eeprom.h | 59 +++++++++++++++++++++++++++++++++++++++++++-
  2 files changed, 76 insertions(+), 37 deletions(-)
 
 diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
-index 57cfd355df1..2b1d5cb0089 100644
+index 485af4745b5..04e6f9f0831 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
 @@ -28,13 +28,9 @@ DECLARE_GLOBAL_DATA_PTR;
@@ -82,15 +82,6 @@ index 57cfd355df1..2b1d5cb0089 100644
  	}
  
  #ifdef DEBUG
-@@ -185,7 +167,7 @@ static void show_eeprom(int devnum, u8 *eeprom)
- 	tlv_end  = HDR_SIZE + be16_to_cpu(eeprom_hdr->totallen);
- 	while (curr_tlv < tlv_end) {
- 		eeprom_tlv = to_entry(&eeprom[curr_tlv]);
--		if (!is_valid_tlv(eeprom_tlv)) {
-+		if (!is_valid_tlvinfo_entry(eeprom_tlv)) {
- 			printf("Invalid TLV field starting at EEPROM offset %d\n",
- 			       curr_tlv);
- 			return;
 @@ -195,7 +177,7 @@ static void show_eeprom(int devnum, u8 *eeprom)
  	}
  
@@ -138,7 +129,7 @@ index 57cfd355df1..2b1d5cb0089 100644
  
  	eeprom_len = HDR_SIZE + be16_to_cpu(eeprom_hdr->totallen);
 -	ret = write_tlv_eeprom(eeprom, eeprom_len, devnum);
-+	ret = write_tlv_eeprom(eeprom, eeprom_len, dev);
++	ret = write_tlv_eeprom(eeprom, eeprom_len, dev)
  	if (ret) {
  		printf("Programming failed.\n");
  		return -1;
@@ -204,7 +195,7 @@ index 57cfd355df1..2b1d5cb0089 100644
  
  	*hdr = tlv_hdr;
 diff --git a/include/tlv_eeprom.h b/include/tlv_eeprom.h
-index 2b1e19b2bdd..7fda5b886ab 100644
+index 2b1e19b2bdd..07bc189694f 100644
 --- a/include/tlv_eeprom.h
 +++ b/include/tlv_eeprom.h
 @@ -113,6 +113,51 @@ int write_tlv_eeprom(void *eeprom, int len, int dev);
@@ -259,20 +250,22 @@ index 2b1e19b2bdd..7fda5b886ab 100644
  #else /* !CONFIG_IS_ENABLED(CMD_TLV_EEPROM) */
  
  static inline int read_tlv_eeprom(void *eeprom, int offset, int len, int dev)
-@@ -152,4 +197,16 @@ static inline bool is_valid_tlvinfo_header(struct tlvinfo_header *hdr)
+@@ -151,5 +196,17 @@ static inline bool is_valid_tlvinfo_header(struct tlvinfo_header *hdr)
+ 		(hdr->version == TLV_INFO_VERSION) &&
  		(be16_to_cpu(hdr->totallen) <= TLV_TOTAL_LEN_MAX));
  }
- 
-+/**
-+ *  is_valid_tlv
-+ *
-+ *  Perform basic sanity checks on a TLV field. The TLV is pointed to
-+ *  by the parameter provided.
-+ *      1. The type code is not reserved (0x00 or 0xFF)
-+ */
-+static inline bool is_valid_tlvinfo_entry(struct tlvinfo_tlv *tlv)
-+{
-+	return((tlv->type != 0x00) && (tlv->type != 0xFF));
-+}
-+
+-
++ 
+++/**
+++ *  is_valid_tlv
+++ *
+++ *  Perform basic sanity checks on a TLV field. The TLV is pointed to
+++ *  by the parameter provided.
+++ *      1. The type code is not reserved (0x00 or 0xFF)
+++ */
+++static inline bool is_valid_tlvinfo_entry(struct tlvinfo_tlv *tlv)
+++{
+++	return((tlv->type != 0x00) && (tlv->type != 0xFF));
+++}
+++
  #endif /* __TLV_EEPROM_H_ */
