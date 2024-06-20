@@ -31,6 +31,10 @@ SRC_URI += " \
 	file://0030-board-solidrun-imx8mp-introduce-ddr-training-patches.patch \
 	file://0031-board-solidrun-imx8mp-remove-dtb-fixup-for-hummingbo.patch \
 	file://0032-net-phy-genphy_config-disable-BMCR_PDOWN-if-set.patch \
+        file://0033-board-solidrun-imx8mp-fix-mac-address-calculation.patch \
+	file://0034-board-solidrun-imx8mp-enable-second-on-soc-ethernet.patch \
+	file://0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch \
+	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
 "
 
 LTO:class-target = ""
