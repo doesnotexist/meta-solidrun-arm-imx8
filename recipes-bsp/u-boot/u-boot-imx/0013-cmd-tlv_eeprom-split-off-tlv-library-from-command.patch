@@ -1,7 +1,7 @@
-From 799bea8a97add0cc8e87c56dab8d20b5aabcc771 Mon Sep 17 00:00:00 2001
+From 23b54e5f3d30f31b2ad685235fcaa97c5d066e98 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:36 +0300
-Subject: [PATCH 13/21] cmd: tlv_eeprom: split off tlv library from command
+Subject: [PATCH] cmd: tlv_eeprom: split off tlv library from command
 
 The eeprom command includes functions for reading and writing
 tlv-formatted data from an eeprom, as well as an implementation of the
@@ -1632,6 +1632,3 @@ index 00000000000..464f0aa1faa
 +
 +	return 0;
 +}
--- 
-2.40.1
-

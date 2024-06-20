@@ -1,7 +1,7 @@
-From 3de7482a36150bafca10903ec447bacb620a1d79 Mon Sep 17 00:00:00 2001
+From bdd3823ee1532d95fcdf3a9684d85a96111af0e8 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:34 +0300
-Subject: [PATCH 11/21] cmd: tlv_eeprom: clean up two defines for one thing
+Subject: [PATCH] cmd: tlv_eeprom: clean up two defines for one thing
 
 MAX_TLV_DEVICES defined in C, and TLV_MAX_DEVICES defined in the header
 serve the same purpose. Replace all occurences of the former by the
@@ -70,7 +70,3 @@ index c3986bd377c..00436b7000b 100644
  		return -EINVAL;
  
  	dev = find_tlv_device_by_index(dev_num);
-
--- 
-2.40.1
-

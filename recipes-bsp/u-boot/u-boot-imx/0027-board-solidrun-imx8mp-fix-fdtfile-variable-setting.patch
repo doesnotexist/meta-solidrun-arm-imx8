@@ -1,4 +1,4 @@
-From da9691702280ab1464e9c8facdba80c72450101b Mon Sep 17 00:00:00 2001
+From a45445f47489eea62a6694cbb2cad793312ba126 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 17 Aug 2023 16:18:47 +0200
 Subject: [PATCH] board: solidrun: imx8mp: fix fdtfile variable setting
@@ -28,10 +28,10 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index d9d706f5e28..292db0912c9 100644
+index c23216f4338..74fd50d78bb 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-@@ -736,14 +736,7 @@ int board_late_init(void)
+@@ -635,14 +635,7 @@ int board_late_init(void)
  
  	// auto-select device-tree
  	if (!env_get("fdtfile")) {

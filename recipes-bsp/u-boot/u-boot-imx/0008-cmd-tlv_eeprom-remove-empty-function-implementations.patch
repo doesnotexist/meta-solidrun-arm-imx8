@@ -1,4 +1,4 @@
-From 8d2e782d68f9da54eff52154b42ef78436466afa Mon Sep 17 00:00:00 2001
+From 907f72cbdb76640385bc64e3aea3d4c09fb7bbb9 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:31 +0300
 Subject: [PATCH] cmd: tlv_eeprom: remove empty function implementations from

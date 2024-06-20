@@ -1,7 +1,7 @@
-From 1c4e33f9b98b42f7f44b264fc47b4b692b1a0d91 Mon Sep 17 00:00:00 2001
+From 4dc2d3f0b0789099050730e9214912b4ded196db Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 21 Aug 2023 13:11:55 +0200
-Subject: [PATCH 33/34] board: solidrun: imx8mp: fix mac address calculation
+Subject: [PATCH] board: solidrun: imx8mp: fix mac address calculation
 
 1. mac_add_n function produced unexpected results, incrementing
 66:55:44:33:22:11 to 67:55:44:33:22:11 instead of 66:55:44:33:22:12.
@@ -87,7 +87,3 @@ index d41d2c8cbb8..8ba36fc6e41 100644
  			printf("%s: interface %i: using mac from tlv eeprom: %02X:%02X:%02X:%02X:%02X:%02X\n", __func__, dev_id, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
  			return 0;
  		} else {
-
--- 
-2.35.3
-

@@ -1,8 +1,8 @@
-From 0eeaacc09249ddc30cc2dd8b0357cb48eb756683 Mon Sep 17 00:00:00 2001
+From 94cf8471280a82c4d67d28e45f9f12225bfc9e4f Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:33 +0300
-Subject: [PATCH 10/21] cmd: tlv_eeprom: hide access to static tlv_devices
- array behind accessor
+Subject: [PATCH] cmd: tlv_eeprom: hide access to static tlv_devices array
+ behind accessor
 
 The tlv_eeprom command logic checks the static tlv_devices array to
 validate the eeprom number. This array will be move to a separate tlv
@@ -70,7 +70,3 @@ index e62d35a9f71..574d94ead1f 100644
  /**
   * read_tlv_eeprom - Read the EEPROM binary data from the hardware
   * @eeprom: Pointer to buffer to hold the binary data
-
--- 
-2.40.1
-

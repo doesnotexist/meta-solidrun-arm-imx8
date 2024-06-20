@@ -1,4 +1,4 @@
-From ea7c7d8a53112095154244644e416938241f798f Mon Sep 17 00:00:00 2001
+From 903633b2e8c7aa9265533a63354e4217afe07fb0 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 17 Aug 2023 15:54:38 +0200
 Subject: [PATCH] board: solidrun: imx8mp: fix parsing of tlv data kit sku
@@ -51,7 +51,3 @@ index 15bf2755850..c23216f4338 100644
  			pr_err("%s: kit sku \"%s\" has wrong length (expecting %0X)\n", __func__, hb_tlv_data.tlv_kit_number[i], 23);
  			continue;
  		}
-
--- 
-2.35.3
-

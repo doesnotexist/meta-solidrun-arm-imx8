@@ -1,4 +1,4 @@
-From 7135c0f3745e90e316c5b817bd98228773ec37f8 Mon Sep 17 00:00:00 2001
+From 9e95962b6209962e8adb5b5a81eb24eae595f960 Mon Sep 17 00:00:00 2001
 From: Jon Nettleton <jon@solid-run.com>
 Date: Tue, 30 May 2023 13:31:44 +0200
 Subject: [PATCH] net: dwc_eth_qos: enable clocks in write_hwaddr

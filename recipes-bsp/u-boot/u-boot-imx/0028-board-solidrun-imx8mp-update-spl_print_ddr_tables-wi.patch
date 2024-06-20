@@ -1,4 +1,4 @@
-From d09a7b2c70a9a3b57423297f37c56a1caa9f4f3c Mon Sep 17 00:00:00 2001
+From 0beb289c96f9a4bb7bed68d985250963129016a3 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Wed, 16 Aug 2023 16:49:01 +0200
 Subject: [PATCH] board: solidrun: imx8mp: update spl_print_ddr_tables with

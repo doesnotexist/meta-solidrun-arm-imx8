@@ -1,7 +1,7 @@
-From 560ef2024e8e01ff105b22481359d350a33a627b Mon Sep 17 00:00:00 2001
+From ada26b91de530ac6a1766dda664310ae127a63ba Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:35 +0300
-Subject: [PATCH 12/21] cmd: tlv_eeprom: add my copyright
+Subject: [PATCH] cmd: tlv_eeprom: add my copyright
 
 While each of the previous individual changes is small, accumulated they
 amount to a substantial effort. Explicitly add a Copyright declaration.
@@ -23,6 +23,3 @@ index 00436b7000b..8903abb1ab8 100644
   */
  
  #include <common.h>
--- 
-2.40.1
-

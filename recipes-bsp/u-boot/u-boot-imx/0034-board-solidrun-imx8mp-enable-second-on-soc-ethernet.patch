@@ -1,7 +1,7 @@
-From 9656aadfdf663893c79d682bbbc9d4ce2ff494b8 Mon Sep 17 00:00:00 2001
+From feb539bc55869941a51153a06db97277e8026ae4 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Sun, 20 Aug 2023 14:57:54 +0200
-Subject: [PATCH 34/34] board: solidrun: imx8mp: enable second on-soc ethernet
+Subject: [PATCH] board: solidrun: imx8mp: enable second on-soc ethernet
 
 Signed-off-by: Josua Mayer <josua@solid-run.com>
 ---
@@ -158,7 +158,3 @@ index f756be17c53..019a32b1a13 100644
  #define PHY_ANEG_TIMEOUT 20000
  
  #endif
-
--- 
-2.35.3
-

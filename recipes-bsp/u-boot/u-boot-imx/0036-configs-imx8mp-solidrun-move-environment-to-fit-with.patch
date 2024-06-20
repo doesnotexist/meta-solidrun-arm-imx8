@@ -1,4 +1,4 @@
-From 1398eb63199a50ff7f8f4c5847c28520dd3bcd8a Mon Sep 17 00:00:00 2001
+From 463e3fe660d36dc32cd89cde20287c03356370eb Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 11 Jan 2024 17:38:10 +0100
 Subject: [PATCH] configs: imx8mp-solidrun: move environment to fit within emmc

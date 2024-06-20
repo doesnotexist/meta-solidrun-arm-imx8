@@ -1,8 +1,8 @@
-From 70e2bb145d2687d4546c77ec519de205c8e53a94 Mon Sep 17 00:00:00 2001
+From 148d766af036b89b7b1614195107307121b56ea8 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:38 +0300
-Subject: [PATCH 15/21] lib: tlv_eeprom: add function for reading one entry
- into a C string
+Subject: [PATCH] lib: tlv_eeprom: add function for reading one entry into a C
+ string
 
 This solves the potentially common problem of getting a specific tlv
 entry from an eeprom in board-files, without having to introduce several
@@ -73,6 +73,3 @@ index 464f0aa1faa..205960e8f2a 100644
  /**
   *  set_mac
   *
--- 
-2.40.1
-

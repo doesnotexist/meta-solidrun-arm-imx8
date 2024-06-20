@@ -1,4 +1,4 @@
-From 554c102d3ae616d4ee343874904b1e35c75ed5cd Mon Sep 17 00:00:00 2001
+From 92998d6fddc0613e6653502b0411f1f48e7762ad Mon Sep 17 00:00:00 2001
 From: Jon Nettleton <jon@solid-run.com>
 Date: Tue, 30 May 2023 15:02:38 +0200
 Subject: [PATCH] imx8mp-solidrun: For yocto only pass the fdtfile
@@ -12,10 +12,10 @@ Signed-off-by: Jon Nettleton <jon@solid-run.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index 8ab571a143c..0c2fa3312ea 100644
+index 42216ecedf1..2d90a9bd30e 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-@@ -642,7 +642,7 @@ int board_late_init(void)
+@@ -539,7 +539,7 @@ int board_late_init(void)
  
  	// auto-select device-tree
  	if (!env_get("fdtfile")) {

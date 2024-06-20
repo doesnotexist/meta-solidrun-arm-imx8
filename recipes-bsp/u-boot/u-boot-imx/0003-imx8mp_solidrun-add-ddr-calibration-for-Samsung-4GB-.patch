@@ -1,4 +1,4 @@
-From d98c86db2e0a529a8b5c8be1097e0b269473fc24 Mon Sep 17 00:00:00 2001
+From 53aa86b079ecc8da3701407447f65060b82f1c63 Mon Sep 17 00:00:00 2001
 From: Yazan Shhady <yazan.shhady@solid-run.com>
 Date: Mon, 30 Jan 2023 11:39:32 +0200
 Subject: [PATCH] imx8mp_solidrun: add ddr calibration for Samsung 4GB moudule

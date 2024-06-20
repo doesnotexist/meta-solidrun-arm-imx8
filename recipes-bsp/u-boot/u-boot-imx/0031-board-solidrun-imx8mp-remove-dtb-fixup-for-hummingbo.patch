@@ -1,4 +1,4 @@
-From a4353d936fe205471e8911a5c9652874cb3a2c71 Mon Sep 17 00:00:00 2001
+From ed3cc1e29d2366ceaecd93f2cc2382fa59eef32e Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Sun, 20 Aug 2023 14:17:44 +0200
 Subject: [PATCH] board: solidrun: imx8mp: remove dtb fixup for hummingboard
@@ -13,10 +13,10 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  1 file changed, 18 deletions(-)
 
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index 9e5748ab2b5..adef8c0c3a0 100644
+index be09168fc9f..d41d2c8cbb8 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-@@ -260,24 +260,6 @@ int ft_board_setup(void *blob, struct bd_info *bd)
+@@ -273,24 +273,6 @@ int ft_board_setup(void *blob, struct bd_info *bd)
  	}
  #endif
  

@@ -1,4 +1,4 @@
-From 231a4468b64153608ce122fb7fe642be47b1b428 Mon Sep 17 00:00:00 2001
+From 5badc21b2d9369133cca9aa6a56304901cc2d3a7 Mon Sep 17 00:00:00 2001
 From: Mikhail Anikin <mikhail.anikin@solid-run.com>
 Date: Wed, 21 Jun 2023 19:33:01 +0300
 Subject: [PATCH] Automatic DDR detection for i.MX8MP
@@ -189,10 +189,10 @@ index c3282ccc213..892213d3525 100644
  		if (++bank >= CONFIG_NR_DRAM_BANKS) {
  			puts("CONFIG_NR_DRAM_BANKS is not enough for SDRAM_2\n");
 diff --git a/board/solidrun/imx8mp_solidrun/Makefile b/board/solidrun/imx8mp_solidrun/Makefile
-index 649c0d5c801..20aa427a5e5 100644
+index 257529f4018..e2531571fe1 100644
 --- a/board/solidrun/imx8mp_solidrun/Makefile
 +++ b/board/solidrun/imx8mp_solidrun/Makefile
-@@ -8,5 +8,5 @@ obj-y += imx8mp_solidrun.o mmc.o
+@@ -8,5 +8,5 @@ obj-y += imx8mp_solidrun.o mmc.o ../common/tlv_data.o
  
  ifdef CONFIG_SPL_BUILD
  obj-y += spl.o
@@ -200,7 +200,7 @@ index 649c0d5c801..20aa427a5e5 100644
 +obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_4gb_samsung_micron.o lpddr4_timing_3gb_micron.o lpddr4_timing_2gb_samsung.o lpddr4_timing_1gb_samsung_micron.o
  endif
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index 0c2fa3312ea..d1838567936 100644
+index 2d90a9bd30e..34a37b17cb6 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 @@ -17,6 +17,7 @@
@@ -211,7 +211,7 @@ index 0c2fa3312ea..d1838567936 100644
  #include <asm/arch/sys_proto.h>
  #include <asm/mach-imx/gpio.h>
  #include <asm/mach-imx/mxc_i2c.h>
-@@ -77,21 +78,6 @@ struct efi_capsule_update_info update_info = {
+@@ -90,21 +91,6 @@ struct efi_capsule_update_info update_info = {
  u8 num_image_type_guids = ARRAY_SIZE(fw_images);
  #endif /* EFI_HAVE_CAPSULE_SUPPORT */
  
@@ -233,7 +233,7 @@ index 0c2fa3312ea..d1838567936 100644
  int check_mirror_ddr_tmp(unsigned int addr_1, unsigned int addr_2)
  {
  	/* return 1 if mirror detected between addr_1 and addre_2, else return 0*/
-@@ -119,6 +105,36 @@ int check_mirror_ddr_tmp(unsigned int addr_1, unsigned int addr_2)
+@@ -132,6 +118,36 @@ int check_mirror_ddr_tmp(unsigned int addr_1, unsigned int addr_2)
  	return 0;
  }
  
@@ -270,7 +270,7 @@ index 0c2fa3312ea..d1838567936 100644
  int board_phys_sdram_size(phys_size_t *size)
  {
  	if (!size)
-@@ -141,6 +157,63 @@ int board_phys_sdram_size(phys_size_t *size)
+@@ -154,6 +170,63 @@ int board_phys_sdram_size(phys_size_t *size)
  }
  
  

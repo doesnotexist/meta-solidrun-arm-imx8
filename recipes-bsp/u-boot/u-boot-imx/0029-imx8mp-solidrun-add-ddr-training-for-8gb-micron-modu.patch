@@ -1,4 +1,4 @@
-From 86320e21f4714f500a4c6d0164143dfb040fa47b Mon Sep 17 00:00:00 2001
+From f660496f56dcacde868832e4c916b34fc8b364b1 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Tue, 15 Aug 2023 17:26:13 +0200
 Subject: [PATCH] imx8mp-solidrun: add ddr training for 8gb micron module
@@ -14,10 +14,10 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
  create mode 100644 board/solidrun/imx8mp_solidrun/lpddr4_timing_8gb_micron.c
 
 diff --git a/board/solidrun/imx8mp_solidrun/Makefile b/board/solidrun/imx8mp_solidrun/Makefile
-index 20aa427a5e5..d5b53af855a 100644
+index e2531571fe1..ca86121cb52 100644
 --- a/board/solidrun/imx8mp_solidrun/Makefile
 +++ b/board/solidrun/imx8mp_solidrun/Makefile
-@@ -8,5 +8,9 @@ obj-y += imx8mp_solidrun.o mmc.o
+@@ -8,5 +8,9 @@ obj-y += imx8mp_solidrun.o mmc.o ../common/tlv_data.o
  
  ifdef CONFIG_SPL_BUILD
  obj-y += spl.o
@@ -29,10 +29,10 @@ index 20aa427a5e5..d5b53af855a 100644
 +obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_8gb_micron.o
  endif
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index 292db0912c9..9e5748ab2b5 100644
+index 74fd50d78bb..be09168fc9f 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-@@ -177,10 +177,11 @@ int board_phys_sdram2_size(phys_size_t *size)
+@@ -190,10 +190,11 @@ int board_phys_sdram2_size(phys_size_t *size)
  		return ret;
  
  	/* 4G configuration are Samsung/Micron.
@@ -45,7 +45,7 @@ index 292db0912c9..9e5748ab2b5 100644
  	 *
  	 */
  
-@@ -194,14 +195,21 @@ int board_phys_sdram2_size(phys_size_t *size)
+@@ -207,14 +208,21 @@ int board_phys_sdram2_size(phys_size_t *size)
  		goto exit;
  	}
  
