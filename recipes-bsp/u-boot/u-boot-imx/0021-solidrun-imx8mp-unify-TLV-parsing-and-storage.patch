@@ -1,4 +1,4 @@
-From 51409027d43b197fdde0298078b79fa0e682ceb6 Mon Sep 17 00:00:00 2001
+From 46ff6a627dec4c07f5af3985523891aaa9f5e39c Mon Sep 17 00:00:00 2001
 From: Jon Nettleton <jon@solid-run.com>
 Date: Mon, 29 May 2023 05:48:56 +0200
 Subject: [PATCH 21/21] solidrun: imx8mp: unify TLV parsing and storage
@@ -11,17 +11,17 @@ that it needs to initialize itself.
 
 Signed-off-by: Jon Nettleton <jon@solid-run.com>
 ---
- board/solidrun/common/tlv_data.c              |  88 +++++--
+ board/solidrun/common/tlv_data.c              |  99 +++++--
  board/solidrun/common/tlv_data.h              |  22 +-
  board/solidrun/imx8mp_solidrun/Makefile       |   2 +-
  .../imx8mp_solidrun/imx8mp_solidrun.c         | 244 ++++--------------
- 5 files changed, 136 insertions(+), 221 deletions(-)
+ 4 files changed, 142 insertions(+), 225 deletions(-)
 
 diff --git a/board/solidrun/common/tlv_data.c b/board/solidrun/common/tlv_data.c
-index 11d6e4a138..1b181bd889 100644
+index cf5824886c3..a56a29c221e 100644
 --- a/board/solidrun/common/tlv_data.c
 +++ b/board/solidrun/common/tlv_data.c
-@@ -8,31 +8,54 @@
+@@ -8,31 +8,56 @@
  #include <tlv_eeprom.h>
  #include "tlv_data.h"
  
@@ -45,7 +45,7 @@ index 11d6e4a138..1b181bd889 100644
 +		    sizeof(td->tlv_product_name[index]) - 1);
 +	memcpy(dest, tlv_entry->value, len);
 +}
- 
++
 +static void store_part_number(struct tlvinfo_tlv *tlv_entry,
 +			      struct tlv_data *td, int index)
 +{
@@ -53,6 +53,7 @@ index 11d6e4a138..1b181bd889 100644
 +	char *dest;
 +
 +	dest = td->tlv_part_number[index];
+ 
  	len = min_t(unsigned int, tlv_entry->length,
 -		    sizeof(td->tlv_product_name[0]) - 1);
 +		    sizeof(td->tlv_part_number[index]) - 1);
@@ -76,6 +77,7 @@ index 11d6e4a138..1b181bd889 100644
 +	pr_debug("%s: read mac base = %02X:%02X:%02X:%02X:%02X:%02X\n", __func__, dest[0], dest[1], dest[2], dest[3], dest[4], dest[5]);
 +}
 +
++
  static void parse_tlv_vendor_ext(struct tlvinfo_tlv *tlv_entry,
 -				 struct tlv_data *td)
 +				 struct tlv_data *td, int index)
@@ -87,20 +89,29 @@ index 11d6e4a138..1b181bd889 100644
  
  	if (tlv_entry->length < 5) /* 4 bytes PEN + at least 1 byte type */
  		return;
-@@ -43,15 +66,29 @@ static void parse_tlv_vendor_ext(struct tlvinfo_tlv *tlv_entry,
+@@ -43,20 +68,35 @@ static void parse_tlv_vendor_ext(struct tlvinfo_tlv *tlv_entry,
  	if (pen != 0xffffffff)
  		return;
  
 -	if (val[4] != SR_TLV_CODE_RAM_SIZE)
 -		return;
--	if (tlv_entry->length != 6)
+-	if (tlv_entry->length < 6)
 -		return;
 -	td->ram_size = val[5];
 +	switch (val[4]) {
 +	case SR_TLV_CODE_RAM_SIZE:
-+		if (tlv_entry->length != 6)
++		if (tlv_entry->length < 6)
 +			break;
 +		td->ram_size = val[5];
+ 
+-	/* extension with additional data field for number of ddr channels */
+-	if (tlv_entry->length >= 7) {
+-		td->ram_channels = val[6];
+-	}
++		/* extenvsion with additional data field for number of ddr channels */
++		if (tlv_entry->length >= 7) {
++			td->ram_channels = val[6];
++		}
 +		break;
 +	case SR_TLV_CODE_KIT_NUMBER:
 +		if (tlv_entry->length > 257)
@@ -109,11 +120,12 @@ index 11d6e4a138..1b181bd889 100644
 +	        len = min_t(unsigned int, tlv_entry->length,
 +			    sizeof(td->tlv_kit_number[index]) - 1);
 +		memcpy(dest, tlv_entry->value, len);
-+		break;	
++		break;
 +	default:
++
 +		break;
 +	};
-+		
++
 +	return;
  }
  
@@ -123,29 +135,29 @@ index 11d6e4a138..1b181bd889 100644
  {
  	unsigned int tlv_offset, tlv_len;
  
-@@ -62,10 +99,19 @@ static void parse_tlv_data(u8 *eeprom, struct tlvinfo_header *hdr,
+@@ -67,10 +107,19 @@ static void parse_tlv_data(u8 *eeprom, struct tlvinfo_header *hdr,
  
  		switch (entry->type) {
  		case TLV_CODE_PRODUCT_NAME:
 -			store_product_name(entry, td);
 +			store_product_name(entry, td, index);
 +			break;
-+		case TLV_CODE_PART_NUMBER:
++		case TLV_CODE_PART_NUMBER:		
 +			store_part_number(entry, td, index);
 +			break;
 +		case TLV_CODE_MAC_SIZE:
 +			store_mac_size(entry, td, index);
-+			break;
+ 			break;
 +		case TLV_CODE_MAC_BASE:
 +			store_mac_base(entry, td, index);
- 			break;
++ 			break;
  		case TLV_CODE_VENDOR_EXT:
 -			parse_tlv_vendor_ext(entry, td);
 +			parse_tlv_vendor_ext(entry, td, index);
  			break;
  		default:
  			break;
-@@ -82,12 +128,12 @@ void read_tlv_data(struct tlv_data *td)
+@@ -87,12 +136,12 @@ void read_tlv_data(struct tlv_data *td)
  	struct tlvinfo_tlv *tlv_entry;
  	int ret, i;
  
@@ -161,10 +173,10 @@ index 11d6e4a138..1b181bd889 100644
  }
  
 diff --git a/board/solidrun/common/tlv_data.h b/board/solidrun/common/tlv_data.h
-index a1432e4b8e..ba8a114edb 100644
+index be3f782ac4a..484245e3074 100644
 --- a/board/solidrun/common/tlv_data.h
 +++ b/board/solidrun/common/tlv_data.h
-@@ -8,10 +8,30 @@
+@@ -8,11 +8,31 @@
  
  struct tlv_data {
  	/* Store product name of both SOM and carrier */
@@ -175,6 +187,7 @@ index a1432e4b8e..ba8a114edb 100644
 +	unsigned char tlv_mac_base[TLV_MAX_DEVICES][6];
 +	u16 tlv_mac_count[TLV_MAX_DEVICES];
  	unsigned int ram_size;
+ 	uint8_t ram_channels;
  };
  
 +/*
@@ -197,7 +210,7 @@ index a1432e4b8e..ba8a114edb 100644
  bool sr_product_is(const struct tlv_data *td, const char *product);
  
 diff --git a/board/solidrun/imx8mp_solidrun/Makefile b/board/solidrun/imx8mp_solidrun/Makefile
-index 649c0d5c80..257529f401 100644
+index 649c0d5c801..257529f4018 100644
 --- a/board/solidrun/imx8mp_solidrun/Makefile
 +++ b/board/solidrun/imx8mp_solidrun/Makefile
 @@ -4,7 +4,7 @@
@@ -210,7 +223,7 @@ index 649c0d5c80..257529f401 100644
  ifdef CONFIG_SPL_BUILD
  obj-y += spl.o
 diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
-index bdfa8af08a..b0af978e37 100644
+index c11a39e5516..42216ecedf1 100644
 --- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 +++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
 @@ -35,9 +35,22 @@
@@ -440,7 +453,7 @@ index bdfa8af08a..b0af978e37 100644
 -			continue;
 -		}
 -		pr_info("%s: read kit sku %s\n", __func__, kku);
-+		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i]);
++		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i])
  
  		// SRMP8QDW00D01GE008X01CE
 -		if(strlen(kku) != 23) {
@@ -555,7 +568,7 @@ index bdfa8af08a..b0af978e37 100644
 -		board_mac_from_tlv_eeprom();
 -		read_mac = true;
 -	}
--
+- 
  	/*
  	 * Note: Environment ethaddr (eth1addr, eth2addr, ...) has first priority,
  	 * therefore it should be read and returned here.
@@ -584,6 +597,7 @@ index bdfa8af08a..b0af978e37 100644
  		mac_add_n(mac, i);
  
  		if(is_valid_ethaddr(mac)) {
+
 -- 
 2.40.1
 
