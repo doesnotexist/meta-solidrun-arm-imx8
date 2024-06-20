@@ -8,6 +8,7 @@ SRC_URI += " \
         file://0007-cmd-tlv_eeprom-convert-functions-used-by-command-to-.patch \
         file://0008-cmd-tlv_eeprom-remove-empty-function-implementations.patch \
         file://0009-cmd-tlv_eeprom-move-missing-declarations-and-defines.patch \
+        file://0010-cmd-tlv_eeprom-hide-access-to-static-tlv_devices-arr.patch \
 "
 
 LTO:class-target = ""
