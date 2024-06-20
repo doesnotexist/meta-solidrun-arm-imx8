@@ -15,27 +15,24 @@ Reviewed-by: Stefan Roese <sr@denx.de>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
-index bfd4882e0d..00c5b5f840 100644
+index acbd198d575..5e78a104902 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
-@@ -431,7 +431,7 @@ int do_tlv_eeprom(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
+@@ -434,7 +434,7 @@ int do_tlv_eeprom(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
  	// If no arguments, read the EERPOM and display its contents
  	if (argc == 1) {
  		if (has_been_read != current_dev) {
--			if (read_eeprom(current_dev, eeprom) == 0)
-+			if (read_tlv_eeprom(eeprom, 0, TLV_INFO_MAX_LEN, current_dev) == 0)
- 				has_been_read = current_dev;
- 		}
- 		show_eeprom(current_dev, eeprom);
-@@ -445,7 +445,7 @@ int do_tlv_eeprom(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
+-			ret = read_eeprom(current_dev, eeprom);
++			ret = read_tlv_eeprom(eeprom, 0, TLV_INFO_MAX_LEN, current_dev);
+ 			if (ret) {
+ 				printf("Failed to read EEPROM data from device.\n");
+ 				return 0;
+@@ -468,7 +468,7 @@ int do_tlv_eeprom(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
  	// Read the EEPROM contents
  	if (cmd == 'r') {
  		has_been_read = -1;
--		if (read_eeprom(current_dev, eeprom) == 0) {
-+		if (read_tlv_eeprom(eeprom, 0, TLV_INFO_MAX_LEN, current_dev) == 0) {
- 			printf("EEPROM data loaded from device to memory.\n");
- 			has_been_read = current_dev;
- 		}
--- 
-2.40.1
-
+-		ret = read_eeprom(current_dev, eeprom);
++		ret = read_tlv_eeprom(eeprom, 0, TLV_INFO_MAX_LEN, current_dev);
+ 		if (ret) {
+ 			printf("Failed to read EEPROM data from device.\n");
+ 			return 0;
