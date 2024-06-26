@@ -1,4 +1,4 @@
-From 1eeebfb2f03e5e6abd28614aabb1b97a0c499ddd Mon Sep 17 00:00:00 2001
+From b4783b036123599ac725afe6c51f4436ba0ebfd7 Mon Sep 17 00:00:00 2001
 From: Mikhail Anikin <mikhail.anikin@solid-run.com>
 Date: Sun, 3 Sep 2023 15:52:29 +0300
 Subject: [PATCH] arm64: dts: split pcie reset signals for hb-pulse and
@@ -30,7 +30,7 @@ index e9cd58d1830c..f1c47092bddd 100644
 +	reset-gpio = <&gpio1 6 GPIO_ACTIVE_LOW>;
 +};
 diff --git a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dts b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dts
-index c8a13ad8f50a..8d670ba3422c 100644
+index c8a13ad8f50a..8862e16133a5 100644
 --- a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dts
 +++ b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dts
 @@ -13,3 +13,14 @@ / {
@@ -48,9 +48,8 @@ index c8a13ad8f50a..8d670ba3422c 100644
 +	pinctrl-0 = <&pinctrl_pcie>;
 +	reset-gpio = <&gpio4 28 GPIO_ACTIVE_LOW>;
 +};
-\ No newline at end of file
 diff --git a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dtsi
-index 818f7e440b23..ba8f195350d9 100644
+index 3b4c080d8d68..ba8f195350d9 100644
 --- a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse.dtsi
 @@ -377,8 +377,7 @@ dsim_to_adv7535: endpoint {
@@ -69,7 +68,7 @@ index 818f7e440b23..ba8f195350d9 100644
  
 -        pinctrl_pcie: pciegrp {
 -                fsl,pins = <
--						MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06		0x19
+-			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06		0x19
 -                >;
 -        };
 -
