@@ -9,12 +9,12 @@ SRC_URI += " \
         file://0011-arm64-dts-imx8mp-sr-som-add-second-ethernet-phy.patch \
         file://0012-arm64-dts-add-support-for-imx8mp-hummingboard-extend.patch \
         file://0013-arm64-dts-split-pcie-reset-signals-for-hb-pulse-and-.patch \
-        file://0013-comment-out-mainline-device-tree-found-in-imx8mq-hum.patch \
         file://0020-arm64-dts-imx8mp-hummingboard-pulse-use-upstream-rfk.patch \
         file://0101-dt-bindings-net-adin-add-pin-polarity-properties-for.patch \
         file://0102-net-phy-adin-add-support-for-setting-led-link-status.patch \
         file://0103-arm64-dts-add-description-for-solidrun-solidsense-n8.patch \
         file://0104-arm64-dts-imx8mn-solidsense-n8-add-power-controls-fo.patch \
+        file://0200-comment-out-mainline-device-tree-found-in-imx8mq-hum.patch \
 	file://sr_imx_v8_defconfig \
 "
 
