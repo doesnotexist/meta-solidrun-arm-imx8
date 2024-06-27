@@ -16,6 +16,7 @@ SRC_URI += " \
         file://0103-arm64-dts-add-description-for-solidrun-solidsense-n8.patch \
         file://0104-arm64-dts-imx8mn-solidsense-n8-add-power-controls-fo.patch \
         file://0200-comment-out-mainline-device-tree-found-in-imx8mq-hum.patch \
+        file://0201-fix-dts-to-match-current-defines-in-include-dt-bindi.patch \
 "
 
 KERNEL_MODULE_AUTOLOAD += "imx-sdma"
