@@ -18,6 +18,5 @@ index d7a81984fbe..327d653e2a5 100644
  	default "board/solidrun/imx8mp_solidrun/imximage-8mp-sd.cfg"
  
 -source "board/freescale/common/Kconfig"
-+source "arch/Kconfig.nxp"
  
  endif
