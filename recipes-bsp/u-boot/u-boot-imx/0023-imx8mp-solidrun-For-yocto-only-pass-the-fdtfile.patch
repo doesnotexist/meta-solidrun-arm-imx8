@@ -1,4 +1,4 @@
-From 92998d6fddc0613e6653502b0411f1f48e7762ad Mon Sep 17 00:00:00 2001
+From f23d5ef3c51a3e5403a07ddcffb1e1d32de27fc5 Mon Sep 17 00:00:00 2001
 From: Jon Nettleton <jon@solid-run.com>
 Date: Tue, 30 May 2023 15:02:38 +0200
 Subject: [PATCH] imx8mp-solidrun: For yocto only pass the fdtfile

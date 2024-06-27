@@ -1,4 +1,4 @@
-From ed3cc1e29d2366ceaecd93f2cc2382fa59eef32e Mon Sep 17 00:00:00 2001
+From 973c98c2a0777e69649e8c0eefa05614d114017e Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Sun, 20 Aug 2023 14:17:44 +0200
 Subject: [PATCH] board: solidrun: imx8mp: remove dtb fixup for hummingboard

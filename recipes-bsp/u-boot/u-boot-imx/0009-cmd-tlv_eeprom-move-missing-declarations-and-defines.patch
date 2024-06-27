@@ -1,4 +1,4 @@
-From 69e44342f274f58ca2821b92c9de5269445dba25 Mon Sep 17 00:00:00 2001
+From fedccb4f57371a89d2bb58f460e284658827d5e1 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:32 +0300
 Subject: [PATCH] cmd: tlv_eeprom: move missing declarations and defines

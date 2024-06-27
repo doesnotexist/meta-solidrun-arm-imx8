@@ -1,4 +1,4 @@
-From 03e44d9fadb6effc3505ca2de9a30a2649be7cec Mon Sep 17 00:00:00 2001
+From 716432821a5f2b501ffa1ca42907a6589cdc856c Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 31 Mar 2022 20:16:22 +0300
 Subject: [PATCH] imx8mp: detect board from tlv eeprom

@@ -1,4 +1,4 @@
-From e343e1217223d42e75457945a1a4444939a935de Mon Sep 17 00:00:00 2001
+From e5228229e22b301d67d8a2ad866c5f9e8c274420 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 17 Aug 2023 12:30:28 +0200
 Subject: [PATCH] board: solidrun: imx8mp: introduce ddr training patches to

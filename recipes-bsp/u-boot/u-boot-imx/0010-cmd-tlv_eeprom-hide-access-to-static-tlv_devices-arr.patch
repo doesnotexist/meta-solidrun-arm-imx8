@@ -1,4 +1,4 @@
-From 94cf8471280a82c4d67d28e45f9f12225bfc9e4f Mon Sep 17 00:00:00 2001
+From ce4e6e73f240a45e2af5c94df4cafa41e6335b97 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:33 +0300
 Subject: [PATCH] cmd: tlv_eeprom: hide access to static tlv_devices array

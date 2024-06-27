@@ -1,4 +1,4 @@
-From 6b4b31a3a8394d31870a42a005aacd7bbe57526c Mon Sep 17 00:00:00 2001
+From de6516939369229d7ed48838cdfbbf868f6ca3d9 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 21 Aug 2023 11:16:36 +0200
 Subject: [PATCH] net: phy: genphy_config: disable BMCR_PDOWN if set

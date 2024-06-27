@@ -1,4 +1,4 @@
-From 903633b2e8c7aa9265533a63354e4217afe07fb0 Mon Sep 17 00:00:00 2001
+From fa24681f78aa1fcdcfdb44713eac91a244f9a363 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Thu, 17 Aug 2023 15:54:38 +0200
 Subject: [PATCH] board: solidrun: imx8mp: fix parsing of tlv data kit sku

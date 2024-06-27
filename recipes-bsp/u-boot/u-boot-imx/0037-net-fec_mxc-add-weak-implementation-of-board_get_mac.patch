@@ -1,4 +1,4 @@
-From 5f2eb2a789b61ef2e66df8f7ee0d798a1d759eaf Mon Sep 17 00:00:00 2001
+From 3affd25a2c379a0143f12a44a053394a826f5a55 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Wed, 24 Apr 2024 18:38:06 +0200
 Subject: [PATCH] net: fec_mxc: add weak implementation of board_get_mac

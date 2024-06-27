@@ -1,4 +1,4 @@
-From ada26b91de530ac6a1766dda664310ae127a63ba Mon Sep 17 00:00:00 2001
+From 488e290a6e986debd5170fce60cc4eea777ce812 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:35 +0300
 Subject: [PATCH] cmd: tlv_eeprom: add my copyright

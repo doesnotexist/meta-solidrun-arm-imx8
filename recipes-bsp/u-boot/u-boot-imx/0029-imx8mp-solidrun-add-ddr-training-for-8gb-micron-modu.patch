@@ -1,4 +1,4 @@
-From f660496f56dcacde868832e4c916b34fc8b364b1 Mon Sep 17 00:00:00 2001
+From bdff66e55e366f3cb21135549cd39d2a6971441f Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Tue, 15 Aug 2023 17:26:13 +0200
 Subject: [PATCH] imx8mp-solidrun: add ddr training for 8gb micron module

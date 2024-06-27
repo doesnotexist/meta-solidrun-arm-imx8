@@ -1,4 +1,4 @@
-From 39aab59d8dfdaa55487b6c03da7fdb9ef0331dc6 Mon Sep 17 00:00:00 2001
+From 09a73fd469ff766b1962486c95aebbdad1f7baad Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 4 Apr 2022 14:26:04 +0300
 Subject: [PATCH] imx8mp: don't pre-define fdtfile environment variable

@@ -1,4 +1,4 @@
-From bdd3823ee1532d95fcdf3a9684d85a96111af0e8 Mon Sep 17 00:00:00 2001
+From 4f072efd7e0f71ce4536107f6ad5fc003976bb83 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 2 May 2022 17:18:34 +0300
 Subject: [PATCH] cmd: tlv_eeprom: clean up two defines for one thing

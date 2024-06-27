@@ -1,4 +1,4 @@
-From cecdf9fba5b650f0db82c1c5927b8b593c4d0941 Mon Sep 17 00:00:00 2001
+From 0724c12b4223c932c2ea442c4e9632765a70547c Mon Sep 17 00:00:00 2001
 From: Yazan Shhady <yazan.shhady@solid-run.com>
 Date: Tue, 17 Jan 2023 11:09:03 +0200
 Subject: [PATCH] imx8mp: add memory support for 2GByte Samsung

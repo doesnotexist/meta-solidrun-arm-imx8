@@ -1,4 +1,4 @@
-From 3665666c9ca723f22b0d945b9c9f17b42cd5b93f Mon Sep 17 00:00:00 2001
+From 298ba00acde56281e100e3d6a988ad98d0e7a859 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 4 Apr 2022 09:47:22 +0300
 Subject: [PATCH] imx8mp: implement tlv eeprom vendor extension for kit sku

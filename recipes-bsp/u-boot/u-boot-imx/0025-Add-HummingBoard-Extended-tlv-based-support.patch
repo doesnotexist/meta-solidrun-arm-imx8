@@ -1,4 +1,4 @@
-From ccae3828fd9fcfb6e0c54b65e009f54cc402af34 Mon Sep 17 00:00:00 2001
+From de6aa00588f7c976c75cde30517cf64848d72ed3 Mon Sep 17 00:00:00 2001
 From: Mikhail Anikin <mikhail.anikin@solid-run.com>
 Date: Sun, 6 Aug 2023 09:29:51 +0300
 Subject: [PATCH] Add HummingBoard Extended tlv-based support

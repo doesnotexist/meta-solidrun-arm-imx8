@@ -1,4 +1,4 @@
-From 5badc21b2d9369133cca9aa6a56304901cc2d3a7 Mon Sep 17 00:00:00 2001
+From 914b01b730b788f34c2ffe2fba2e6ffc603e6339 Mon Sep 17 00:00:00 2001
 From: Mikhail Anikin <mikhail.anikin@solid-run.com>
 Date: Wed, 21 Jun 2023 19:33:01 +0300
 Subject: [PATCH] Automatic DDR detection for i.MX8MP

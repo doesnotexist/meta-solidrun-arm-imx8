@@ -1,4 +1,4 @@
-From 4dc2d3f0b0789099050730e9214912b4ded196db Mon Sep 17 00:00:00 2001
+From e9f7657f18ee76670c650811e12770e88cace782 Mon Sep 17 00:00:00 2001
 From: Josua Mayer <josua@solid-run.com>
 Date: Mon, 21 Aug 2023 13:11:55 +0200
 Subject: [PATCH] board: solidrun: imx8mp: fix mac address calculation
