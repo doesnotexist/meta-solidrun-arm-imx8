@@ -1,0 +1,22 @@
+From 6105458eccba4a05b93d571ff0fbf632f5ea9532 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Thu, 27 Jun 2024 21:02:33 +0000
+Subject: [PATCH] Kconfig.nxp is now included once at the top-level and not per
+ board.
+ https://source.denx.de/u-boot/u-boot/-/commit/93145335fbf5cbe7f6b1ca42263a156620a37f7f
+
+---
+ board/solidrun/imx8mp_solidrun/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/board/solidrun/imx8mp_solidrun/Kconfig b/board/solidrun/imx8mp_solidrun/Kconfig
+index d7a81984fbe..7b025cf7ff4 100644
+--- a/board/solidrun/imx8mp_solidrun/Kconfig
++++ b/board/solidrun/imx8mp_solidrun/Kconfig
+@@ -12,6 +12,4 @@ config SYS_CONFIG_NAME
+ config IMX_CONFIG
+ 	default "board/solidrun/imx8mp_solidrun/imximage-8mp-sd.cfg"
+ 
+-source "board/freescale/common/Kconfig"
+-
+ endif
