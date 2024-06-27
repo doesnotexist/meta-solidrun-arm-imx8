@@ -2,6 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 PATCHTOOL = "git"
 KBUILD_DEFCONFIG_mx8 = ""
 SRC_URI += " \
+		file://sr_imx_v8_defconfig \
         file://0007-ARM64-dts-imx8mp-Add-SolidRun-iMX8MP-SOM-based-platf.patch \
         file://0008-Move-M.2-PCIe-reset-from-M.2-rfkill-to-PCIe-node.patch \
         file://0009-arm64-dts-imx8mp-hummingboard-pulse-add-separate-dtb.patch \
@@ -15,7 +16,6 @@ SRC_URI += " \
         file://0103-arm64-dts-add-description-for-solidrun-solidsense-n8.patch \
         file://0104-arm64-dts-imx8mn-solidsense-n8-add-power-controls-fo.patch \
         file://0200-comment-out-mainline-device-tree-found-in-imx8mq-hum.patch \
-	file://sr_imx_v8_defconfig \
 "
 
 KERNEL_MODULE_AUTOLOAD += "imx-sdma"
