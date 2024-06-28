@@ -1,0 +1,44 @@
+From 84e7b2b70c90d7b5a5cb0b9b8e20b1faad88ab40 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Fri, 28 Jun 2024 17:06:12 +0000
+Subject: [PATCH] add definition, fix missing semicolon, and rename constant
+
+---
+ arch/arm/include/asm/arch-imx8m/clock.h          | 1 +
+ board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/include/asm/arch-imx8m/clock.h b/arch/arm/include/asm/arch-imx8m/clock.h
+index 041b989952f..d6184ca0cb7 100644
+--- a/arch/arm/include/asm/arch-imx8m/clock.h
++++ b/arch/arm/include/asm/arch-imx8m/clock.h
+@@ -280,6 +280,7 @@ void init_clk_fspi(int index);
+ void enable_ocotp_clk(unsigned char enable);
+ int enable_i2c_clk(unsigned char enable, unsigned int i2c_num);
+ int set_clk_enet(enum enet_freq type);
++int set_clk_eqos(enum enet_freq type);
+ void hab_caam_clock_enable(unsigned char enable);
+ void enable_usboh3_clk(unsigned char enable);
+ u32 get_dsi_phy_ref_clk(void);
+diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+index 944d693e594..304d9076125 100644
+--- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
++++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+@@ -108,7 +108,7 @@ int check_mirror_ddr_tmp(unsigned int addr_1, unsigned int addr_2)
+ 	volatile unsigned int *ptr;
+ 
+ 	retrain_tmp = 0;
+-	ptr = (volatile unsigned int *)CONFIG_SYS_SDRAM_BASE;
++	ptr = (volatile unsigned int *)CFG_SYS_SDRAM_BASE;
+ 	save1 = ptr[addr_1];
+ 	save2 = ptr[addr_2];
+ 	ptr[addr_2] = save1 << 1;
+@@ -533,7 +533,7 @@ static void board_id_from_tlv_info(void) {
+ 			pr_err("%s: did not recognise SKU %s!\n", __func__, hb_tlv_data.tlv_part_number[i]);
+ 		}
+ 
+-		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i])
++		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i]);
+ 
+ 		// SRMP8QDW00D01GE008X01CE
+ 		if(!hb_tlv_data.tlv_kit_number[i][0])
