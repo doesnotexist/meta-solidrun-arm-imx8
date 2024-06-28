@@ -36,8 +36,6 @@ SRC_URI += " \
 	file://0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
         file://0038-Kconfig.nxp-is-now-included-once-at-the-top-level-an.patch \
-        file://0039-retry-with-new-config-entries.patch \
-        file://0040-try-new-config.patch \
 "
 
 LTO:class-target = ""
