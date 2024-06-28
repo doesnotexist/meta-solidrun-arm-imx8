@@ -1,0 +1,21 @@
+From 7a064ff98835467d48fe2a56be0f07b05618c2e0 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Fri, 28 Jun 2024 15:37:44 +0000
+Subject: [PATCH] CONFIG_SPL_BSS_MAX_SIZE=0x2000
+
+---
+ configs/imx8mp_solidrun_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configs/imx8mp_solidrun_defconfig b/configs/imx8mp_solidrun_defconfig
+index 699e430e171..28415ed677a 100644
+--- a/configs/imx8mp_solidrun_defconfig
++++ b/configs/imx8mp_solidrun_defconfig
+@@ -33,6 +33,7 @@ CONFIG_DEFAULT_FDT_FILE="imx8mp-hummingboard-pulse.dtb"
+ CONFIG_ARCH_MISC_INIT=y
+ CONFIG_BOARD_EARLY_INIT_F=y
+ CONFIG_BOARD_LATE_INIT=y
++CONFIG_SPL_BSS_MAX_SIZE=0x2000
+ CONFIG_SPL_BOARD_INIT=y
+ CONFIG_SPL_BOOTROM_SUPPORT=y
+ CONFIG_SPL_SEPARATE_BSS=y
