@@ -47,7 +47,7 @@ diff --git a/cmd/tlv_eeprom.c b/cmd/tlv_eeprom.c
 index 8903abb1ab8..c0beaddce6d 100644
 --- a/cmd/tlv_eeprom.c
 +++ b/cmd/tlv_eeprom.c
-@@ -10,133 +10,22 @@
+@@ -10,133 +10,26 @@
   * Copyright (C) 2022 Josua Mayer <josua@solid-run.com>
   */
  
@@ -66,6 +66,10 @@ index 8903abb1ab8..c0beaddce6d 100644
 -#include "tlv_eeprom.h"
 -
 -DECLARE_GLOBAL_DATA_PTR;
++#include <linux/kernel.h>
++#include <stdio.h>
++#include <tlv_eeprom.h>
++#include <vsprintf.h>
  
  /* File scope function prototypes */
 -static int read_eeprom(int devnum, u8 *eeprom);
