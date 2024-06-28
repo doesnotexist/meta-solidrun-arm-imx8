@@ -38,6 +38,7 @@ SRC_URI += " \
         file://0038-Kconfig.nxp-is-now-included-once-at-the-top-level-an.patch \
         file://0039-Update-imx8mp_solidrun_defconfig.patch \
         file://0040-SPL_BSS_MAX_SIZE.patch \
+        file://0041-SPL_STACK.patch \
 "
 
 LTO:class-target = ""
