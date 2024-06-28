@@ -1,0 +1,139 @@
+From 73ab591284e6b3c76a5cb7f64650667c5eda00c2 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Fri, 28 Jun 2024 20:54:21 +0000
+Subject: [PATCH] migrate include configs since values moved to KConfig
+
+---
+ arch/arm/include/asm/arch-imx8m/clock.h       |  1 +
+ .../imx8mp_solidrun/imx8mp_solidrun.c         |  2 +-
+ include/configs/imx8mp_solidrun.h             | 73 ++-----------------
+ 3 files changed, 9 insertions(+), 67 deletions(-)
+
+diff --git a/arch/arm/include/asm/arch-imx8m/clock.h b/arch/arm/include/asm/arch-imx8m/clock.h
+index 041b989952f..d6184ca0cb7 100644
+--- a/arch/arm/include/asm/arch-imx8m/clock.h
++++ b/arch/arm/include/asm/arch-imx8m/clock.h
+@@ -280,6 +280,7 @@ void init_clk_fspi(int index);
+ void enable_ocotp_clk(unsigned char enable);
+ int enable_i2c_clk(unsigned char enable, unsigned int i2c_num);
+ int set_clk_enet(enum enet_freq type);
++int set_clk_eqos(enum enet_freq type);
+ void hab_caam_clock_enable(unsigned char enable);
+ void enable_usboh3_clk(unsigned char enable);
+ u32 get_dsi_phy_ref_clk(void);
+diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+index 2b5eef0d4c6..304d9076125 100644
+--- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
++++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+@@ -108,7 +108,7 @@ int check_mirror_ddr_tmp(unsigned int addr_1, unsigned int addr_2)
+ 	volatile unsigned int *ptr;
+ 
+ 	retrain_tmp = 0;
+-	ptr = (volatile unsigned int *)CONFIG_SYS_SDRAM_BASE;
++	ptr = (volatile unsigned int *)CFG_SYS_SDRAM_BASE;
+ 	save1 = ptr[addr_1];
+ 	save2 = ptr[addr_2];
+ 	ptr[addr_2] = save1 << 1;
+diff --git a/include/configs/imx8mp_solidrun.h b/include/configs/imx8mp_solidrun.h
+index 019a32b1a13..faa6f4bdc7d 100644
+--- a/include/configs/imx8mp_solidrun.h
++++ b/include/configs/imx8mp_solidrun.h
+@@ -11,47 +11,10 @@
+ #include <asm/arch/imx-regs.h>
+ #include "imx_env.h"
+ 
+-#define CONFIG_SYS_BOOTM_LEN		(32 * SZ_1M)
+-
+-#define CONFIG_SPL_MAX_SIZE		(176 * 1024)
+-#define CONFIG_SYS_MONITOR_LEN		(512 * 1024)
+-#define CONFIG_SYS_UBOOT_BASE	(QSPI0_AMBA_BASE + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512)
+-
+-#ifdef CONFIG_SPL_BUILD
+-#define CONFIG_SPL_STACK		0x96dff0
+-#define CONFIG_SPL_BSS_START_ADDR      0x96e000
+-#define CONFIG_SPL_BSS_MAX_SIZE		SZ_8K	/* 8 KB */
+-#define CONFIG_SYS_SPL_MALLOC_START	0x42200000
+-#define CONFIG_SYS_SPL_MALLOC_SIZE	SZ_512K	/* 512 KB */
+-
+-/* For RAW image gives a error info not panic */
+-#define CONFIG_SPL_ABORT_ON_RAW_IMAGE
+-
+-#if defined(CONFIG_NAND_BOOT)
+-#define CONFIG_SPL_NAND_BASE
+-#define CONFIG_SPL_NAND_IDENT
+-#define CONFIG_SYS_NAND_U_BOOT_OFFS 	0x4000000 /* Put the FIT out of first 64MB boot area */
+-
+-/* Set a redundant offset in nand FIT mtdpart. The new uuu will burn full boot image (not only FIT part) to the mtdpart, so we check both two offsets */
+-#define CONFIG_SYS_NAND_U_BOOT_OFFS_REDUND \
+-	(CONFIG_SYS_NAND_U_BOOT_OFFS + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512 - 0x8400)
+-#endif
+-
+-#endif
+-
+-#define CONFIG_CMD_READ
+-#define CONFIG_SERIAL_TAG
+-#define CONFIG_FASTBOOT_USB_DEV 0
+-
+-#define CONFIG_REMAKE_ELF
+-/* ENET Config */
+-/* ENET1 */
++#define CFG_SYS_UBOOT_BASE	(QSPI0_AMBA_BASE + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512)
+ 
+ #if defined(CONFIG_CMD_NET)
+-#define CONFIG_ETHPRIME                 "eth0" /* Set eqos to primary since it's phy is always assembled */
+-
+-#define CONFIG_FEC_XCV_TYPE             RGMII
+-#define FEC_QUIRK_ENET_MAC
++#define CFG_FEC_MXC_PHYADDR          1
+ 
+ #define PHY_ANEG_TIMEOUT 20000
+ 
+@@ -160,17 +123,11 @@
+ 
+ /* Link Definitions */
+ 
+-#define CONFIG_SYS_INIT_RAM_ADDR	0x40000000
+-#define CONFIG_SYS_INIT_RAM_SIZE	0x80000
+-#define CONFIG_SYS_INIT_SP_OFFSET \
+-	(CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
+-#define CONFIG_SYS_INIT_SP_ADDR \
+-	(CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
+-
+-#define CONFIG_MMCROOT			"/dev/mmcblk1p2"  /* USDHC2 */
++#define CFG_SYS_INIT_RAM_ADDR	0x40000000
++#define CFG_SYS_INIT_RAM_SIZE	0x80000
+ 
+ /* Totally 8GB DDR */
+-#define CONFIG_SYS_SDRAM_BASE		0x40000000
++#define CFG_SYS_SDRAM_BASE		0x40000000
+ #define PHYS_SDRAM			0x40000000
+ #define PHYS_SDRAM_SIZE			0xC0000000	/* 3 GB */
+ #define PHYS_SDRAM_2			0x100000000
+@@ -179,25 +136,9 @@
+ /* Some general LPDDR4 macros */
+ #define LPDDR4_SAMSUNG_MANID		0x1
+ 
+-#define CONFIG_MXC_UART_BASE		UART2_BASE_ADDR
+-
+-/* Monitor Command Prompt */
+-#define CONFIG_SYS_CBSIZE		2048
+-#define CONFIG_SYS_MAXARGS		64
+-#define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE
+-#define CONFIG_SYS_PBSIZE		(CONFIG_SYS_CBSIZE + \
+-					sizeof(CONFIG_SYS_PROMPT) + 16)
+-
+-#define CONFIG_IMX_BOOTAUX
+-
+-#define CONFIG_SYS_FSL_USDHC_NUM	2
+-#define CONFIG_SYS_FSL_ESDHC_ADDR	0
+-
+-/* USB configs */
++#define CFG_MXC_UART_BASE		UART2_BASE_ADDR
+ 
+-#define CONFIG_USB_MAX_CONTROLLER_COUNT         2
+-#define CONFIG_USBD_HS
+-#define CONFIG_USB_GADGET_VBUS_DRAW 2
++#define CFG_SYS_FSL_USDHC_NUM	2
+ 
+ #ifdef CONFIG_ANDROID_SUPPORT
+ #include "imx8mp_evk_android.h"
