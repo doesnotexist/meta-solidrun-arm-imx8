@@ -1,0 +1,32 @@
+From 6ec1bfd0d95953e4527ccba5f921d9ae498b5783 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Fri, 28 Jun 2024 21:40:36 +0000
+Subject: [PATCH] update spl.c
+
+---
+ board/solidrun/imx8mp_solidrun/spl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/board/solidrun/imx8mp_solidrun/spl.c b/board/solidrun/imx8mp_solidrun/spl.c
+index 3f76caad17b..619eccd0ef8 100644
+--- a/board/solidrun/imx8mp_solidrun/spl.c
++++ b/board/solidrun/imx8mp_solidrun/spl.c
+@@ -30,6 +30,7 @@
+ #include <fsl_esdhc_imx.h>
+ #include <mmc.h>
+ #include <asm/arch/ddr.h>
++#include <asm/sections.h>
+ 
+ #include "lpddr4_timing.h"
+ 
+@@ -169,8 +170,8 @@ static bool spl_dram_is_1G(void)
+ 	/* The idea is to write a value in offset 1G and see if it is
+ 	 * written in offset 0 as well
+ 	 */
+-	base1 = (volatile uint32_t *)CONFIG_SYS_SDRAM_BASE;
+-	base2 = (volatile uint32_t *)((uint64_t)CONFIG_SYS_SDRAM_BASE + SZ_1G);
++	base1 = (volatile uint32_t *)CFG_SYS_SDRAM_BASE;
++	base2 = (volatile uint32_t *)((uint64_t)CFG_SYS_SDRAM_BASE + SZ_1G);
+ 
+ 	backup1 = *base1;
+ 	backup2 = *base2;
