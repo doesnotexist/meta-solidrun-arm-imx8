@@ -453,7 +453,7 @@ index c11a39e5516..42216ecedf1 100644
 -			continue;
 -		}
 -		pr_info("%s: read kit sku %s\n", __func__, kku);
-+		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i])
++		pr_info("%s: read kit sku %s\n", __func__, hb_tlv_data.tlv_kit_number[i]);
  
  		// SRMP8QDW00D01GE008X01CE
 -		if(strlen(kku) != 23) {
