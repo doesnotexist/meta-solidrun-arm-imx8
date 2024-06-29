@@ -36,11 +36,13 @@ SRC_URI += " \
 	file://0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
         file://0038-Kconfig.nxp-is-now-included-once-at-the-top-level-an.patch \
-        file://0039-Update-imx8mp_solidrun_defconfig.patch \
-        file://0040-migrate-include-configs-since-values-moved-to-KConfi.patch \
-        file://0041-rename-usb_gadget_handle_interrupts-to-dm_usb_gadget.patch \
-        file://0042-update-spl.c.patch \
+
 "
+
+#file://0039-Update-imx8mp_solidrun_defconfig.patch \
+#file://0040-migrate-include-configs-since-values-moved-to-KConfi.patch \
+#file://0041-rename-usb_gadget_handle_interrupts-to-dm_usb_gadget.patch \
+#file://0042-update-spl.c.patch \
 
 LTO:class-target = ""
 
