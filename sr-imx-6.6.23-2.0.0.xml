@@ -34,7 +34,7 @@
   <project name="meta-qt6" path="sources/meta-qt6" remote="qt" revision="dc13e1bfda4a4757a08c2d6673bc4bac012c4a80" upstream="6.7.0" />
   <project name="meta-browser" path="sources/meta-browser" remote="ossystems" revision="dc31889c0899971def535dc1c040edf18bc16691" />
   <project name="meta-security" path="sources/meta-security" remote="yocto" revision="11ea91192d43d7c2b0b95a93aa63ca7e73e38034" upstream="scarthgap"/>
-  <project name="meta-timesys" remote="timesys" path="sources/meta-timesys" revision="b96d8de949939ad08094f71ed6ed4f88eaf41d5e" upstream="master"/>
+  <project name="meta-timesys" path="sources/meta-timesys" remote="timesys" revision="b96d8de949939ad08094f71ed6ed4f88eaf41d5e" upstream="master"/>
   <project name="meta-virtualization" path="sources/meta-virtualization" remote="yocto" revision="37c06acf58f9020bccfc61954eeefe160642d5f3" upstream="scarthgap"/>
 
   <project name="meta-imx" path="sources/meta-imx" remote="doesnotexist" revision="88978bd884ef03d1f510d4689c0a7d69b8ead196" upstream="scarthgap-6.6.23-2.0.0">
