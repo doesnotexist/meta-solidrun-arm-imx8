@@ -37,6 +37,7 @@ SRC_URI += " \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
         file://0038-Kconfig.nxp-is-now-included-once-at-the-top-level-an.patch \
         file://0039-update-solidrun-configs-to-v2024.patch \
+        file://0040-disable-EFI-capsule-authentication.patch \
 "
 
 LTO:class-target = ""
