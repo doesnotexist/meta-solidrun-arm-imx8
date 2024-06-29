@@ -40,8 +40,8 @@
   <project name="meta-imx" path="sources/meta-imx" remote="doesnotexist" revision="88978bd884ef03d1f510d4689c0a7d69b8ead196" upstream="scarthgap-6.6.23-2.0.0">
     <linkfile dest="README-IMXBSP" src="README"/>
   </project>
-  <project name="meta-matter" remote="imx" path="sources/meta-matter" revision="imx_matter_2024_q1-post" />
-  <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="scarthgap-6.6.23-2.0.0" />
+  <project name="meta-matter" path="sources/meta-matter" remote="nxp-imx" revision="imx_matter_2024_q1-post" />
+  <project name="meta-nxp-demo-experience" path="sources/meta-nxp-demo-experience" remote="imx-support" revision="scarthgap-6.6.23-2.0.0" />
 
   <project name="meta-solidrun-arm-imx8" path="sources/meta-solidrun-arm-imx8" remote="doesnotexist" revision="scarthgap-imx8m-WIP">
     <linkfile dest="imx-setup-release.sh" src="setup.sh"/>
