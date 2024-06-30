@@ -1,0 +1,28 @@
+From 918c556c938d7254bd99dcf4214315be0dbc5dae Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Sun, 30 Jun 2024 02:25:46 +0000
+Subject: [PATCH] uncomment pinctrl_reg_usdhc2_vmmc
+
+---
+ arch/arm/dts/imx8mp-solidrun.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/dts/imx8mp-solidrun.dts b/arch/arm/dts/imx8mp-solidrun.dts
+index b9106f239da..ed853dc373d 100644
+--- a/arch/arm/dts/imx8mp-solidrun.dts
++++ b/arch/arm/dts/imx8mp-solidrun.dts
+@@ -516,12 +516,12 @@
+ 		>;
+ 	};
+ 
+-/*	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmc {
++	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_SD2_RESET_B__GPIO2_IO19	0x41
+ 		>;
+ 	};
+-*/
++
+ 	pinctrl_uart2: uart2grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x49

@@ -40,6 +40,7 @@ SRC_URI += " \
         file://0040-disable-EFI-capsule-authentication.patch \
         file://0041-new-schema-for-U-Boot-spl-tags.patch \
         file://0042-update-imx8mp-solidrun.dts.patch \
+        file://0043-uncomment-pinctrl_reg_usdhc2_vmmc.patch \
 "
 
 LTO:class-target = ""
