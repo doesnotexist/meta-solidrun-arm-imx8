@@ -41,6 +41,7 @@ SRC_URI += " \
         file://0041-new-schema-for-U-Boot-spl-tags.patch \
         file://0042-update-imx8mp-solidrun.dts.patch \
         file://0043-uncomment-pinctrl_reg_usdhc2_vmmc.patch \
+        file://0044-comment-out-pinctrl_reg_usdhc2_vmmc-and-use-simpler.patch \
 "
 
 LTO:class-target = ""
