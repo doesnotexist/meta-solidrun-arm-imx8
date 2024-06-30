@@ -1,0 +1,26 @@
+From c1265a6b33bed3f19beb3045e8ed6f50152f8e3d Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Sun, 30 Jun 2024 03:53:01 +0000
+Subject: [PATCH] match declared type signature for
+ dm_usb_gadget_handle_interrupts
+
+---
+ board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+index 8be6469867e..363831d711b 100644
+--- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
++++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+@@ -313,9 +313,9 @@ static struct dwc3_device dwc3_device_data = {
+ 	.power_down_scale = 2,
+ };
+ 
+-int dm_usb_gadget_handle_interrupts(int index)
++int dm_usb_gadget_handle_interrupts(struct udevice *dev)
+ {
+-	dwc3_uboot_handle_interrupt(index);
++	dwc3_uboot_handle_interrupt(dev);
+ 	return 0;
+ }
+ 
