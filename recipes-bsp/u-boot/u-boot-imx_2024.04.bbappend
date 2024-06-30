@@ -37,6 +37,7 @@ SRC_URI += " \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
         file://0039-update-solidrun-configs-to-v2024.patch \
         file://0040-new-schema-for-the-u-boot-dm-tags-since-2023.patch \
+        file://0041-Kconfig.nxp-included-only-once-in-arch.patch \
 "
 
 LTO:class-target = ""
