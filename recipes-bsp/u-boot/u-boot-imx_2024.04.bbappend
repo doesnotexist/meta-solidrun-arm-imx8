@@ -39,6 +39,7 @@ SRC_URI += " \
         file://0039-update-solidrun-configs-to-v2024.patch \
         file://0040-disable-EFI-capsule-authentication.patch \
         file://0041-new-schema-for-U-Boot-spl-tags.patch \
+        file://0042-update-imx8mp-solidrun.dts.patch \
 "
 
 LTO:class-target = ""
