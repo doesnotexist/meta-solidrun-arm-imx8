@@ -38,6 +38,7 @@ SRC_URI += " \
         file://0039-update-solidrun-configs-to-v2024.patch \
         file://0040-new-schema-for-the-u-boot-dm-tags-since-2023.patch \
         file://0041-Kconfig.nxp-included-only-once-in-arch.patch \
+        file://0042-include-asm-sections.patch \
 "
 
 LTO:class-target = ""

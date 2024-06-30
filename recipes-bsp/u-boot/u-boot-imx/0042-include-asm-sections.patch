@@ -1,0 +1,21 @@
+From b833eb04cef4dfd7e21ac3d0744f463a064ba95e Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Sun, 30 Jun 2024 03:43:10 +0000
+Subject: [PATCH] include asm/sections
+
+---
+ board/solidrun/imx8mp_solidrun/spl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/board/solidrun/imx8mp_solidrun/spl.c b/board/solidrun/imx8mp_solidrun/spl.c
+index 70e090b8532..619eccd0ef8 100644
+--- a/board/solidrun/imx8mp_solidrun/spl.c
++++ b/board/solidrun/imx8mp_solidrun/spl.c
+@@ -30,6 +30,7 @@
+ #include <fsl_esdhc_imx.h>
+ #include <mmc.h>
+ #include <asm/arch/ddr.h>
++#include <asm/sections.h>
+ 
+ #include "lpddr4_timing.h"
+ 
