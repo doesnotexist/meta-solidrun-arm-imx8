@@ -35,13 +35,6 @@ SRC_URI += " \
 	file://0034-board-solidrun-imx8mp-enable-second-on-soc-ethernet.patch \
 	file://0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
-        file://0038-Kconfig.nxp-is-now-included-once-at-the-top-level-an.patch \
-        file://0039-update-solidrun-configs-to-v2024.patch \
-        file://0040-disable-EFI-capsule-authentication.patch \
-        file://0041-new-schema-for-U-Boot-spl-tags.patch \
-        file://0042-update-imx8mp-solidrun.dts.patch \
-        file://0043-uncomment-pinctrl_reg_usdhc2_vmmc.patch \
-        file://0044-comment-out-pinctrl_reg_usdhc2_vmmc-and-use-simpler.patch \
 "
 
 LTO:class-target = ""
