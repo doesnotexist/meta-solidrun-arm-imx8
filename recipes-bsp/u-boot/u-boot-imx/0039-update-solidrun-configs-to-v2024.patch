@@ -1,15 +1,15 @@
-From 4df59c7fecf7469124f544f67b4c18ae7fac01ca Mon Sep 17 00:00:00 2001
+From d2fd02c4970fcad8e1d519d00bc713daa62692ea Mon Sep 17 00:00:00 2001
 From: Omar El-Domeiri <github@doesnotexist.com>
-Date: Sat, 29 Jun 2024 17:18:03 +0000
+Date: Sun, 30 Jun 2024 03:16:38 +0000
 Subject: [PATCH] update solidrun configs to v2024
 
 ---
  arch/arm/include/asm/arch-imx8m/clock.h       |  1 +
  .../imx8mp_solidrun/imx8mp_solidrun.c         |  4 +-
- board/solidrun/imx8mp_solidrun/spl.c          |  5 +-
- configs/imx8mp_solidrun_defconfig             | 33 +++++++--
- include/configs/imx8mp_solidrun.h             | 69 ++-----------------
- 5 files changed, 39 insertions(+), 73 deletions(-)
+ board/solidrun/imx8mp_solidrun/spl.c          |  4 +-
+ configs/imx8mp_solidrun_defconfig             | 35 ++++++---
+ include/configs/imx8mp_solidrun.h             | 71 +++----------------
+ 5 files changed, 40 insertions(+), 75 deletions(-)
 
 diff --git a/arch/arm/include/asm/arch-imx8m/clock.h b/arch/arm/include/asm/arch-imx8m/clock.h
 index 041b989952f..d6184ca0cb7 100644
@@ -46,18 +46,10 @@ index 2b5eef0d4c6..8be6469867e 100644
  	dwc3_uboot_handle_interrupt(index);
  	return 0;
 diff --git a/board/solidrun/imx8mp_solidrun/spl.c b/board/solidrun/imx8mp_solidrun/spl.c
-index 3f76caad17b..619eccd0ef8 100644
+index 3f76caad17b..70e090b8532 100644
 --- a/board/solidrun/imx8mp_solidrun/spl.c
 +++ b/board/solidrun/imx8mp_solidrun/spl.c
-@@ -30,6 +30,7 @@
- #include <fsl_esdhc_imx.h>
- #include <mmc.h>
- #include <asm/arch/ddr.h>
-+#include <asm/sections.h>
- 
- #include "lpddr4_timing.h"
- 
-@@ -169,8 +170,8 @@ static bool spl_dram_is_1G(void)
+@@ -169,8 +169,8 @@ static bool spl_dram_is_1G(void)
  	/* The idea is to write a value in offset 1G and see if it is
  	 * written in offset 0 as well
  	 */
@@ -69,7 +61,7 @@ index 3f76caad17b..619eccd0ef8 100644
  	backup1 = *base1;
  	backup2 = *base2;
 diff --git a/configs/imx8mp_solidrun_defconfig b/configs/imx8mp_solidrun_defconfig
-index 05e21751030..de530e66311 100644
+index 05e21751030..3e692d8620e 100644
 --- a/configs/imx8mp_solidrun_defconfig
 +++ b/configs/imx8mp_solidrun_defconfig
 @@ -1,20 +1,17 @@
@@ -147,15 +139,15 @@ index 05e21751030..de530e66311 100644
  CONFIG_NET_RANDOM_ETHADDR=y
  CONFIG_SPL_DM=y
  CONFIG_REGMAP=y
-@@ -101,6 +114,7 @@ CONFIG_FASTBOOT_FLASH=y
+@@ -101,7 +114,6 @@ CONFIG_FASTBOOT_FLASH=y
  CONFIG_MXC_GPIO=y
  CONFIG_DM_PCA953X=y
  CONFIG_DM_I2C=y
-+## NOTE CONFIG_SYS_I2C_MXC removed from other imx8mp defconfigs
- CONFIG_SYS_I2C_MXC=y
+-CONFIG_SYS_I2C_MXC=y
  CONFIG_LED=y
  CONFIG_LED_GPIO=y
-@@ -118,7 +132,6 @@ CONFIG_SF_DEFAULT_SPEED=40000000
+ CONFIG_DM_MMC=y
+@@ -118,7 +130,6 @@ CONFIG_SF_DEFAULT_SPEED=40000000
  CONFIG_SPI_FLASH_BAR=y
  CONFIG_SPI_FLASH_STMICRO=y
  CONFIG_PHY_REALTEK=y
@@ -163,7 +155,7 @@ index 05e21751030..de530e66311 100644
  CONFIG_DM_ETH_PHY=y
  CONFIG_PHY_GIGE=y
  CONFIG_PHY=y
-@@ -130,9 +143,14 @@ CONFIG_MII=y
+@@ -130,9 +141,14 @@ CONFIG_MII=y
  CONFIG_PINCTRL=y
  CONFIG_SPL_PINCTRL=y
  CONFIG_PINCTRL_IMX8M=y
@@ -178,7 +170,12 @@ index 05e21751030..de530e66311 100644
  CONFIG_DM_REGULATOR_FIXED=y
  CONFIG_DM_REGULATOR_GPIO=y
  CONFIG_DM_RTC=y
-@@ -158,6 +176,7 @@ CONFIG_DM_VIDEO=y
+@@ -154,10 +170,12 @@ CONFIG_USB_GADGET=y
+ CONFIG_USB_GADGET_MANUFACTURER="FSL"
+ CONFIG_USB_GADGET_VENDOR_NUM=0x1fc9
+ CONFIG_USB_GADGET_PRODUCT_NUM=0x0152
++CONFIG_DM_SERIAL=y
+ CONFIG_DM_VIDEO=y
  CONFIG_BMP_16BPP=y
  CONFIG_BMP_24BPP=y
  CONFIG_BMP_32BPP=y
@@ -186,11 +183,19 @@ index 05e21751030..de530e66311 100644
  CONFIG_VIDEO_LOGO=y
  CONFIG_SYS_WHITE_ON_BLACK=y
  CONFIG_VIDEO_LCD_RAYDIUM_RM67191=y
+@@ -174,6 +192,7 @@ CONFIG_EFI_SET_TIME=y
+ CONFIG_EFI_RUNTIME_UPDATE_CAPSULE=y
+ CONFIG_EFI_CAPSULE_ON_DISK=y
+ CONFIG_EFI_CAPSULE_FIRMWARE_RAW=y
++CONFIG_EFI_CAPSULE_ESL_FILE="CRT.esl"
+ CONFIG_EFI_SECURE_BOOT=y
+ CONFIG_SPL_RSA=y
+ CONFIG_SHA384=y
 diff --git a/include/configs/imx8mp_solidrun.h b/include/configs/imx8mp_solidrun.h
-index 019a32b1a13..ff97b9f11dd 100644
+index 019a32b1a13..2cbcd391a09 100644
 --- a/include/configs/imx8mp_solidrun.h
 +++ b/include/configs/imx8mp_solidrun.h
-@@ -11,47 +11,11 @@
+@@ -11,47 +11,10 @@
  #include <asm/arch/imx-regs.h>
  #include "imx_env.h"
  
@@ -233,14 +238,14 @@ index 019a32b1a13..ff97b9f11dd 100644
  
  #if defined(CONFIG_CMD_NET)
 -#define CONFIG_ETHPRIME                 "eth0" /* Set eqos to primary since it's phy is always assembled */
- 
+-
 -#define CONFIG_FEC_XCV_TYPE             RGMII
 -#define FEC_QUIRK_ENET_MAC
 +#define CFG_FEC_MXC_PHYADDR          1
  
  #define PHY_ANEG_TIMEOUT 20000
  
-@@ -160,17 +124,13 @@
+@@ -160,17 +123,13 @@
  
  /* Link Definitions */
  
@@ -261,7 +266,7 @@ index 019a32b1a13..ff97b9f11dd 100644
  #define PHYS_SDRAM			0x40000000
  #define PHYS_SDRAM_SIZE			0xC0000000	/* 3 GB */
  #define PHYS_SDRAM_2			0x100000000
-@@ -179,25 +139,10 @@
+@@ -179,25 +138,11 @@
  /* Some general LPDDR4 macros */
  #define LPDDR4_SAMSUNG_MANID		0x1
  
@@ -280,11 +285,12 @@ index 019a32b1a13..ff97b9f11dd 100644
 -#define CONFIG_SYS_FSL_ESDHC_ADDR	0
 -
  /* USB configs */
-+#define CFG_MXC_UART_BASE		UART2_BASE_ADDR
  
 -#define CONFIG_USB_MAX_CONTROLLER_COUNT         2
 -#define CONFIG_USBD_HS
 -#define CONFIG_USB_GADGET_VBUS_DRAW 2
++#define CFG_MXC_UART_BASE		UART2_BASE_ADDR
++
 +#define CFG_SYS_FSL_USDHC_NUM	2
  
  #ifdef CONFIG_ANDROID_SUPPORT

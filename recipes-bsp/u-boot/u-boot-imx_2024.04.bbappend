@@ -35,6 +35,8 @@ SRC_URI += " \
 	file://0034-board-solidrun-imx8mp-enable-second-on-soc-ethernet.patch \
 	file://0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch \
 	file://0037-net-fec_mxc-add-weak-implementation-of-board_get_mac.patch \
+        file://0039-update-solidrun-configs-to-v2024.patch \
+        file://0040-new-schema-for-the-u-boot-dm-tags-since-2023.patch \
 "
 
 LTO:class-target = ""

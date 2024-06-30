@@ -1,16 +1,14 @@
-From 4a97259c1bcf885dcd0a4dcc115d60aadf83c27b Mon Sep 17 00:00:00 2001
+From e5cc79771e06cde16265a99fea43982490daa276 Mon Sep 17 00:00:00 2001
 From: Omar El-Domeiri <github@doesnotexist.com>
-Date: Sun, 30 Jun 2024 01:58:48 +0000
-Subject: [PATCH] NOTE: U-Boot migrated to a new schema for the u-boot,dm-*
- tags in 2023. Please update to use the new bootph-* tags as described in the
- doc/device-tree-bindings/bootph.yaml binding file.
+Date: Sun, 30 Jun 2024 03:24:04 +0000
+Subject: [PATCH] new schema for the u-boot,dm-* tags since 2023
 
 ---
- arch/arm/dts/imx8mp-solidrun-u-boot.dtsi | 110 ++++++++++++-----------
- 1 file changed, 57 insertions(+), 53 deletions(-)
+ arch/arm/dts/imx8mp-solidrun-u-boot.dtsi | 75 ++++++++----------------
+ 1 file changed, 23 insertions(+), 52 deletions(-)
 
 diff --git a/arch/arm/dts/imx8mp-solidrun-u-boot.dtsi b/arch/arm/dts/imx8mp-solidrun-u-boot.dtsi
-index 07101667dbe..618ea0318c6 100644
+index 07101667dbe..66105333de5 100644
 --- a/arch/arm/dts/imx8mp-solidrun-u-boot.dtsi
 +++ b/arch/arm/dts/imx8mp-solidrun-u-boot.dtsi
 @@ -10,13 +10,7 @@
@@ -28,7 +26,7 @@ index 07101667dbe..618ea0318c6 100644
  	};
  
  	mcu_rdc {
-@@ -65,88 +59,80 @@
+@@ -65,88 +59,72 @@
  };
  
  &reg_usdhc2_vmmc {
@@ -37,10 +35,6 @@ index 07101667dbe..618ea0318c6 100644
  	u-boot,off-on-delay-us = <20000>;
  };
  
-+&pinctrl_reg_usdhc2_vmmc {
-+	bootph-pre-ram;
-+};
-+
  &pinctrl_uart2 {
 -	u-boot,dm-spl;
 +	bootph-pre-ram;
@@ -58,10 +52,6 @@ index 07101667dbe..618ea0318c6 100644
  
  &pinctrl_usdhc3 {
 -	u-boot,dm-spl;
-+	bootph-pre-ram;
-+};
-+
-+&pinctrl_wdog {
 +	bootph-pre-ram;
  };
  
@@ -142,7 +132,7 @@ index 07101667dbe..618ea0318c6 100644
  	sd-uhs-sdr104;
  	sd-uhs-ddr50;
  	assigned-clocks = <&clk IMX8MP_CLK_USDHC2>;
-@@ -155,7 +141,7 @@
+@@ -155,7 +133,7 @@
  };
  
  &usdhc3 {
@@ -151,7 +141,7 @@ index 07101667dbe..618ea0318c6 100644
  	mmc-hs400-1_8v;
  	mmc-hs400-enhanced-strobe;
  	assigned-clocks = <&clk IMX8MP_CLK_USDHC3>;
-@@ -164,40 +150,58 @@
+@@ -164,26 +142,19 @@
  };
  
  &wdog1 {
@@ -159,66 +149,26 @@ index 07101667dbe..618ea0318c6 100644
 +	bootph-pre-ram;
  };
  
--&{/soc@0/bus@30800000/i2c@30a20000/pca9450@25} {
+ &{/soc@0/bus@30800000/i2c@30a20000/pca9450@25} {
 -	u-boot,dm-spl;
-+&{/soc@0/bus@30800000/i2c@30a20000/pmic@25} {
 +	bootph-all;
  };
  
--&{/soc@0/bus@30800000/i2c@30a20000/pca9450@25/regulators} {
+ &{/soc@0/bus@30800000/i2c@30a20000/pca9450@25/regulators} {
 -	u-boot,dm-spl;
-+&{/soc@0/bus@30800000/i2c@30a20000/pmic@25/regulators} {
 +	bootph-all;
  };
  
  &pinctrl_pmic {
 -	u-boot,dm-spl;
-+	bootph-all;
- };
- 
+-};
+-
 -&eqos {
 -	compatible = "fsl,imx-eqos";
-+&lcdif1 {
- 	/delete-property/ assigned-clocks;
- 	/delete-property/ assigned-clock-parents;
- 	/delete-property/ assigned-clock-rates;
- };
- 
--&lcdif1 {
 -	/delete-property/ assigned-clocks;
 -	/delete-property/ assigned-clock-parents;
 -	/delete-property/ assigned-clock-rates;
-+/*
-+ &ethphy0 {
-+	reset-gpios = <&gpio4 22 GPIO_ACTIVE_LOW>;
-+	reset-assert-us = <15000>;
-+	reset-deassert-us = <100000>;
-+};
-+
-+&fec {
-+	phy-reset-gpios = <&gpio4 2 GPIO_ACTIVE_LOW>;
-+	phy-reset-duration = <15>;
-+	phy-reset-post-delay = <100>;
++	bootph-all;
  };
  
-+&flexspi {
-+	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_400M>;
-+};
-+*/
-+
- &mipi_dsi {
- 	/delete-property/ assigned-clocks;
- 	/delete-property/ assigned-clock-parents;
- 	/delete-property/ assigned-clock-rates;
- };
- 
-+&media_blk_ctrl {
-+	assigned-clock-rates = <500000000>, <200000000>;
-+};
-+
-+/* Consider USB OTG support 
-+ * https://github.com/nxp-imx/uboot-imx/commit/b0eef7326920ff55ec22dfb86812033d84737839 
-+ */
- &usb3_0 {
- 	/delete-property/ power-domains;
- };
+ &lcdif1 {
