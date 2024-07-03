@@ -20,7 +20,7 @@ Subject: [PATCH] Add imx8mp solidrun support for lf_v2024.04
  drivers/net/dwc_eth_qos_imx.c                 |   2 +-
  drivers/net/fec_mxc.c                         |   7 +-
  drivers/net/phy/phy.c                         |   5 +
- include/configs/imx8mp_solidrun.h             |  91 +-
+ include/configs/imx8mp_solidrun.h             |  90 +-
  include/tlv_eeprom.h                          | 119 ++-
  lib/Kconfig                                   |   1 +
  lib/Makefile                                  |   2 +
@@ -3379,7 +3379,7 @@ index 9d34c54d66d..a6ffb995d8c 100644
  
  #include <linux/sizes.h>
  #include <linux/stringify.h>
-@@ -13,35 +13,53 @@
+@@ -13,35 +13,52 @@
  
  #define CFG_SYS_UBOOT_BASE	(QSPI0_AMBA_BASE + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512)
  
@@ -3393,7 +3393,6 @@ index 9d34c54d66d..a6ffb995d8c 100644
 +	(CONFIG_SYS_NAND_U_BOOT_OFFS + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512 - 0x8400)
 +#endif
 +
-+#define CONFIG_CMD_READ
 +#define CONFIG_SERIAL_TAG
 +#define CONFIG_FASTBOOT_USB_DEV 0
 +
