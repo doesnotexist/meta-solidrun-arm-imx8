@@ -3424,7 +3424,7 @@ index 9d34c54d66d..a6ffb995d8c 100644
  #endif
  
 -#define JH_ROOT_DTB    "imx8mp-evk-root.dtb"
-+#define JH_ROOT_DTB    "imx8mp-hummingboard-pulse-root.dtb
++#define JH_ROOT_DTB    "imx8mp-hummingboard-pulse-root.dtb"
  
  #define JAILHOUSE_ENV \
  	"jh_clk= \0 " \
