@@ -3,6 +3,7 @@ PATCHTOOL = "git"
 SRC_URI += " \
         file://0001-Add-2024.patch \
         file://0002-update-dts.patch \
+        file://0003-remove-comments.patch \
 "
 
 LTO:class-target = ""

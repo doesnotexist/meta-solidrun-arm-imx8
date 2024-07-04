@@ -1,0 +1,97 @@
+From aee2dcf9744cb3a6f394cb7180efd83291866119 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Thu, 4 Jul 2024 02:37:55 +0000
+Subject: [PATCH] remove comments
+
+---
+ board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c |  3 ---
+ board/solidrun/imx8mp_solidrun/spl.c             |  5 +----
+ include/configs/imx8mp_solidrun.h                | 13 ++-----------
+ 3 files changed, 3 insertions(+), 18 deletions(-)
+
+diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+index f9770dc4d12..0fc73f65844 100644
+--- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
++++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+@@ -355,9 +355,6 @@ static void dwc3_nxp_usb_phy_init(struct dwc3_device *dwc3)
+ int board_usb_init(int index, enum usb_init_type init)
+ {
+ 	int ret = 0;
+-	// OMAR: Solidrun diverges from imx8mp_evk.c here because:
+-	// solidrun calls imx8mp_usb_power outside of the conditional
+-	// imx8m_usb_power(index, true);
+ 
+ 	if (index == 0 && init == USB_INIT_DEVICE) {
+ 		imx8m_usb_power(index, true);
+diff --git a/board/solidrun/imx8mp_solidrun/spl.c b/board/solidrun/imx8mp_solidrun/spl.c
+index e60d5cb88ff..0f8a7e85e70 100644
+--- a/board/solidrun/imx8mp_solidrun/spl.c
++++ b/board/solidrun/imx8mp_solidrun/spl.c
+@@ -451,8 +451,7 @@ int power_init_board(void)
+ 	pmic_reg_write(dev, PCA9450_BUCK2OUT_DVS0, 0x1C);
+ 
+ 	/* set WDOG_B_CFG to cold reset */
+-	// OMAR: Solidrun does not do this, commenting out
+-	// pmic_reg_write(dev, PCA9450_RESET_CTRL, 0xA1);
++	pmic_reg_write(dev, PCA9450_RESET_CTRL, 0xA1);
+ 
+ 	return 0;
+ }
+@@ -482,8 +481,6 @@ void board_init_f(ulong dummy)
+ 
+ 	timer_init();
+ 
+-	// OMAR: Conisider moving preloader_console_init() call here as solidrun does
+-
+ 	ret = spl_early_init();
+ 	if (ret) {
+ 		debug("spl_early_init() failed: %d\n", ret);
+diff --git a/include/configs/imx8mp_solidrun.h b/include/configs/imx8mp_solidrun.h
+index 19caab6d607..78da12f3214 100644
+--- a/include/configs/imx8mp_solidrun.h
++++ b/include/configs/imx8mp_solidrun.h
+@@ -28,10 +28,7 @@
+ 
+ #if defined(CONFIG_CMD_NET)
+ 
+-// OMAR: TODO not sure what this value should be for this board
+-#define CFG_FEC_MXC_PHYADDR          1
+-
+-// OMAR: TODO this is being moved to Kconfig https://github.com/trini/u-boot/commit/66103759595b1db6fb7355f95eca8af2334c4749
++// TODO: soon to be moved to Kconfig https://github.com/trini/u-boot/commit/66103759595b1db6fb7355f95eca8af2334c4749
+ #define PHY_ANEG_TIMEOUT 20000
+ 
+ #endif
+@@ -75,7 +72,6 @@
+ 	"emmc_dev=2\0"\
+ 	"sd_dev=1\0"
+ 
+-// TODO: omar remove fdtfile here?
+ #define CFG_EXTRA_ENV_SETTINGS		\
+ 	CFG_MFG_ENV_SETTINGS \
+ 	JAILHOUSE_ENV \
+@@ -93,7 +89,6 @@
+ 	"boot_fdt=try\0" \
+ 	"fdt_high=0xffffffffffffffff\0"		\
+ 	"boot_fit=no\0" \
+-	"fdtfile=" CONFIG_DEFAULT_FDT_FILE "\0" \
+ 	"bootm_size=0x10000000\0" \
+ 	"mmcdev="__stringify(CONFIG_SYS_MMC_ENV_DEV)"\0" \
+ 	"mmcpart=1\0" \
+@@ -164,15 +159,11 @@
+ 
+ // OMAR: TODO is this even necessary anymore?
+ // https://github.com/trini/u-boot/commit/0e1b54247d7e3e69e0af5c4dc7a3b26acf9e8451
+-#define CFG_MXC_UART_BASE		UART2_BASE_ADDR
++// #define CFG_MXC_UART_BASE		UART2_BASE_ADDR
+ // #define CFG_MXC_UART_BASE		UART_BASE_ADDR(2)
+ 
+ #define CFG_SYS_NAND_BASE           0x20000000
+ 
+-// OMAR: https://github.com/trini/u-boot/commit/42d56cad6395528e09c00b65643953bad7b9f793
+-// #define CFG_SYS_FSL_USDHC_NUM	2
+-// #define CFG_SYS_FSL_ESDHC_ADDR	0
+-
+ /* USB configs */
+ #define CONFIG_USB_MAX_CONTROLLER_COUNT         2
+ #define CONFIG_USBD_HS
