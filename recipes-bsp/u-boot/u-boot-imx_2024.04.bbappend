@@ -2,6 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 PATCHTOOL = "git"
 SRC_URI += " \
         file://0001-Add-2024.patch \
+        file://0002-update-dts.patch \
 "
 
 LTO:class-target = ""
