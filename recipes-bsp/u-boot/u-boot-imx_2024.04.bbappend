@@ -5,6 +5,8 @@ SRC_URI += " \
         file://0002-update-dts.patch \
         file://0003-remove-comments.patch \
         file://0004-update-defconfig.patch \
+        file://0005-configs.patch \
+        file://0006-fix-tlv-eeprom-mac-retrieval.patch \
 "
 
 LTO:class-target = ""

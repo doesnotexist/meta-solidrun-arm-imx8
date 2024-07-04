@@ -1,0 +1,123 @@
+From a7d10dd0ea443a5cc7ffbc00fca0496f1150e137 Mon Sep 17 00:00:00 2001
+From: Omar El-Domeiri <github@doesnotexist.com>
+Date: Thu, 4 Jul 2024 03:28:46 +0000
+Subject: [PATCH] fix tlv eeprom mac retrieval
+
+---
+ .../imx8mp_solidrun/imx8mp_solidrun.c         | 61 ++++++++++++++++++-
+ configs/clearfog_defconfig                    |  2 +
+ configs/imx8mp_solidrun_defconfig             |  1 +
+ 3 files changed, 62 insertions(+), 2 deletions(-)
+
+diff --git a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+index 0fc73f65844..acac0403a3d 100644
+--- a/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
++++ b/board/solidrun/imx8mp_solidrun/imx8mp_solidrun.c
+@@ -639,12 +639,44 @@ int board_late_init(void)
+ 	return 0;
+ }
+ 
++static struct board_mac {
++	unsigned char base[2][6];
++	u16 count[2];
++} board_mac = {0};
++
++// calculate n-th mac from base
++static void mac_add_n(unsigned char *base, u16 n) {
++	if (n == 0)
++		return;
++
++	/*
++	 * There is no 48 or 64-bit capable big-endian / host order
++	 * conversion function available, increment byte for byte ...
++	 */
++	base[5]++;
++	if (base[5] == 0) {
++		base[4]++;
++		if (base[4] == 0) {
++			base[3]++;
++			if (base[3] == 0) {
++				base[2]++;
++				if (base[2] == 0) {
++					base[1]++;
++					if (base[1] == 0)
++						base[0]++;
++				}
++			}
++		}
++	}
++
++	return mac_add_n(base, n-1);
++}
++
+ /*
+  * select board mac address for given interface
+  */
+ int board_get_mac(int dev_id, unsigned char *mac) {
+-	char macenv[16] = {0};
+-	mac[0] = 0;
++	int i;
+ 
+ 	/*
+ 	 * Note: Environment ethaddr (eth1addr, eth2addr, ...) has first priority,
+@@ -653,6 +685,31 @@ int board_get_mac(int dev_id, unsigned char *mac) {
+ 	 * causing a feedback loop.
+ 	 */
+ 
++	// tlv eeproms
++	i = dev_id;
++	for(int j = 0; j < TLV_MAX_DEVICES; j++) {
++		if(!is_valid_ethaddr(&hb_tlv_data.tlv_mac_base[j]))
++			continue;
++
++		// count if enough macs are provided
++		if (i >= hb_tlv_data.tlv_mac_count[j]) {
++			i -= hb_tlv_data.tlv_mac_count[j];
++			continue;
++		}
++
++		// compute i-th mac
++		memcpy(mac, &hb_tlv_data.tlv_mac_base[j], 6);
++		mac_add_n(mac, i);
++
++		if (is_valid_ethaddr(mac)) {
++			printf("%s: interface %i: using mac from tlv eeprom: %02X:%02X:%02X:%02X:%02X:%02X\n", __func__, dev_id, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
++			return 0;
++		} else {
++			pr_debug("%s: computed mac %02X:%02X:%02X:%02X:%02X:%02X is invalid\n", __func__, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
++			break;
++		}
++	}
++
+ 	// fuses
+ 	imx_get_mac_from_fuse(dev_id, mac);
+ 	if(is_valid_ethaddr(mac)) {
+diff --git a/configs/clearfog_defconfig b/configs/clearfog_defconfig
+index db2f2664c8d..166d926a8c9 100644
+--- a/configs/clearfog_defconfig
++++ b/configs/clearfog_defconfig
+@@ -13,6 +13,7 @@ CONFIG_MVEBU_SPL_BOOT_DEVICE_MMC=y
+ CONFIG_DEFAULT_DEVICE_TREE="armada-388-clearfog"
+ CONFIG_SPL_TEXT_BASE=0x40000030
+ CONFIG_SPL_SERIAL=y
++CONFIG_SPL_DRIVERS_MISC=y
+ CONFIG_SPL_STACK=0x4002c000
+ CONFIG_SPL=y
+ CONFIG_DEBUG_UART_BASE=0xf1012000
+@@ -76,3 +77,4 @@ CONFIG_SYS_NS16550=y
+ CONFIG_KIRKWOOD_SPI=y
+ CONFIG_USB=y
+ CONFIG_USB_XHCI_HCD=y
++CONFIG_SPL_EEPROM_TLV_LIB=y
+diff --git a/configs/imx8mp_solidrun_defconfig b/configs/imx8mp_solidrun_defconfig
+index 44a437d238d..5d45df9bceb 100644
+--- a/configs/imx8mp_solidrun_defconfig
++++ b/configs/imx8mp_solidrun_defconfig
+@@ -10,6 +10,7 @@ CONFIG_NR_DRAM_BANKS=3
+ CONFIG_SYS_MEMTEST_START=0x60000000
+ CONFIG_SYS_MEMTEST_END=0xC0000000
+ CONFIG_ENV_SIZE=0x80000
++# https://github.com/doesnotexist/meta-solidrun-arm-imx8/blob/scarthgap-imx8m-WIP/recipes-bsp/u-boot/u-boot-imx/old_patches/0036-configs-imx8mp-solidrun-move-environment-to-fit-with.patch
+ CONFIG_ENV_OFFSET=0x700000
+ CONFIG_ENV_SECT_SIZE=0x10000
+ CONFIG_SYS_I2C_MXC_I2C1=y
